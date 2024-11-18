@@ -5,7 +5,7 @@ import axios from 'axios';
 import { updateCart, removeFromCart,setCartItems } from '../../store/slices/cartSlice';
 import {useSelector } from 'react-redux';
 import ItemUpdateModal from './ItemUpdateModal';
-
+import { url } from '@/constant';
 // if(item.veriantId.)
 // forEach(item.variants as veriant){if(veriant._id==item.veriantId){console.log(veriant.color)}}
 
@@ -57,7 +57,7 @@ const [isSizeAvailable,setIsSizeAvailable]=useState(true)
     
     try{
  console.log("try block")
-      const response = await axios.put('http://localhost:4000/api/cart/update', {
+      const response = await axios.put(`${url}api/cart/update`, {
         userId,
         cartItemId:updatedItem._id,
         productId: updatedItem.productId._id,
@@ -91,7 +91,7 @@ const [isSizeAvailable,setIsSizeAvailable]=useState(true)
     console.log("Cart Item remove",userId)
     console.log("Cart Item remove",item._id);
     try {
-      const response = await axios.delete('http://localhost:4000/api/cart/remove/', {
+      const response = await axios.delete(`${url}api/cart/remove/`, {
         data: { userId, cartItemId: item._id },
       });
   
@@ -108,7 +108,7 @@ const [isSizeAvailable,setIsSizeAvailable]=useState(true)
     }
   };
   const fetchCart = async () => {
-    const response = await axios.get(`http://localhost:4000/api/cart/${userId}`);
+    const response = await axios.get(`${url}api/cart/${userId}`);
     console.log("cart items component-------------",response.data.items)
     dispatch(setCartItems(response.data.items));
   };

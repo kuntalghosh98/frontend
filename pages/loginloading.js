@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-
+import { url } from '@/constant';
 const Loading = () => {
   const router = useRouter();
 
@@ -20,7 +20,7 @@ const Loading = () => {
       // Fetch user data and store it in Redux
       const fetchUserData = async () => {
         try {
-          const response = await axios.get('http://localhost:4000/api/users/profile', {
+          const response = await axios.get(`${url}api/users/profile`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

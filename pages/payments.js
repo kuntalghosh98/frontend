@@ -9,7 +9,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import PaymentSuccessModal from '../components/PaymentSuccessModal';
-
+import { url } from '@/constant';
 const Payments = () => {
   const [amount, setAmount] = useState(500); // Example amount in INR
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
@@ -20,7 +20,7 @@ const Payments = () => {
       setIsPaymentLoading(true);
 
       // Step 1: Create an order by calling the backend API
-      const { data } = await axios.post('http://localhost:4000/api/payment/order', {
+      const { data } = await axios.post(`${url}api/payment/order`, {
         amount: amount, // Convert to paisa (for Razorpay)
         currency: 'INR',
       });
@@ -47,7 +47,7 @@ const Payments = () => {
           };
 
           // Verify the payment by calling the backend
-          const result = await axios.post('http://localhost:4000/api/payment/verify', paymentData);
+          const result = await axios.post(`${url}api/payment/verify`, paymentData);
           console.log("Verification result:", result);
 
           if (result.data.success) {
@@ -75,7 +75,7 @@ const Payments = () => {
           backdropclose: true, // Allow closing the modal by clicking outside
         },
          // Custom payment failure handler (Step 3: Handle payment failure)
-         "callback_url": 'http://localhost:4000/api/payment/failure', // Optional: Custom failure handling on the backend
+         "callback_url": `${url}api/payment/failure`, // Optional: Custom failure handling on the backend
          "retry": {
            "enabled": false // Disable retry to avoid confusion in failure scenario
          },

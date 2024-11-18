@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import OrderdItem from '../components/Order/OrderdItem';
 import AddressCard from '@/components/Address/AddressCard';
 import axios from 'axios';
+import { url } from '@/constant';
 const OrderDetailPage=()=> {
     const router = useRouter();
    const [orderdItem,setOrderdItem]=useState([])
@@ -13,7 +14,7 @@ const OrderDetailPage=()=> {
    
 
     const fetchOrder= async (id)=>{
-        const response = await axios.get(`http://localhost:4000/api/orders/${id}`);
+        const response = await axios.get(`${url}api/orders/${id}`);
         console.log("response----------------",response.data)
         setOrderdItem(response.data.items)
         setDeliveryAddress(response.data.address)

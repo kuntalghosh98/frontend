@@ -4,7 +4,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import HorizontalScrollCardItem from './HorizontalScrollCardItem';
-
+import { url } from '@/constant';
 const HorizontalScrollCard = ({ cards }) => {
  
 console.log("card--------------------------------",cards)
@@ -18,7 +18,7 @@ console.log("card--------------------------------",cards)
        
       >
         {cards.map((card, index) => (
-          <HorizontalScrollCardItem key={index} imageUrl={card.image} route={card.categoryName} />
+          <HorizontalScrollCardItem key={index} imageUrl={`${url}/uploads/${card.image}`} route={card.categoryName} />
         ))}
       </div>
    

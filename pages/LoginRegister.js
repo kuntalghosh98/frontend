@@ -4,7 +4,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useRouter } from 'next/router';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
-
+import { url } from '@/constant';
 
 const LoginRegister = ({ onClose }) => {
    const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,13 +35,13 @@ const LoginRegister = ({ onClose }) => {
   console.log("islogin"+isLoggedIn)
   const handleGoogleLogin = () => {
     // Implement Google login functionality here
-    window.location.href = 'http://localhost:4000/api/users/auth/google';
+    window.location.href = `${url}/api/users/auth/google`;
   };
 
   const handleGetOtp =async (event) => {
     event.preventDefault();
     try{
-      const response = await axios.post('http://localhost:4000/api/users/request-email-otp', {
+      const response = await axios.post(`${url}/api/users/request-email-otp`, {
         email
         
       });

@@ -11,7 +11,7 @@ import { useSwipeable } from 'react-swipeable';
 // import ProductSuggestion from '@/components/Product/ProductSuggestion'; // Import the product suggestion component
 import ProductScrollBanner from '@/components/ProductScrollBanner/ProductScrollBanner';
 import { setCartItems } from '../store/slices/cartSlice';
-
+import { url } from '@/constant';
 
 
 
@@ -56,7 +56,7 @@ const ProductDetailsCard = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/products/${id}`);
+        const response = await axios.get(`${url}api/products/${id}`);
         const productData = response.data;
         console.log(productData);
         setProduct(productData);
@@ -75,7 +75,7 @@ const ProductDetailsCard = () => {
         setLoading(false);
 
         // Fetch product suggestions (you might want to filter or limit the results)
-        const suggestionsResponse = await axios.get('http://localhost:4000/api/products/suggestions');
+        const suggestionsResponse = await axios.get(`${url}api/products/suggestions`);
         setSuggestions(suggestionsResponse.data);
       } catch (error) {
         console.error('Error fetching product details:', error);
@@ -124,7 +124,7 @@ const ProductDetailsCard = () => {
       }, 4000);
 
       try {
-        const response = await axios.post('http://localhost:4000/api/cart/add', {
+        const response = await axios.post(`${url}api/cart/add`, {
           userId,
           productId: id,
           size,

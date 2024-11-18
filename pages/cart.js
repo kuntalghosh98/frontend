@@ -7,6 +7,7 @@ import CartItem from '../components/Cart/CartItem';
 import CartSummary from '../components/Cart/CartSummary';
 import Router from 'next/router';
 import { useRouter } from "next/router";
+import { url } from '@/constant';
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
@@ -33,7 +34,7 @@ const Cart = () => {
     const userId =user._id;
 
     const fetchCart = async () => {
-      const response = await axios.get(`http://localhost:4000/api/cart/${userId}`);
+      const response = await axios.get(`${url}api/cart/${userId}`);
       console.log("cart items cart component",response.data.items)
       dispatch(setCartItems(response.data.items));
     };

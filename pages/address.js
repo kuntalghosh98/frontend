@@ -86,7 +86,7 @@ import AddressForm from '../components/Address/AddressForm';
 import AddressCard from '../components/Address/AddressCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddresses } from '@/store/slices/addressSlice';
-
+import { url } from '@/constant';
 const AddressPage = () => {
     const user = useSelector((state) => state.user.user);
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
@@ -102,14 +102,14 @@ const AddressPage = () => {
   const [addresses, setAddresses1] = useState([]);
 
   const fetchAddress = async () => {
-    const response = await axios.get(`http://localhost:4000/api/address/${userId}`);
+    const response = await axios.get(`${url}api/address/${userId}`);
     console.log("cart items cart componentyy",response.data)
     dispatch(setAddresses(response.data));
     setAddresses1(response.data)
     console.log(addresses)
   };
   const addAddress = async (address) => {
-    const response = await axios.post(`http://localhost:4000/api/address/add/`,
+    const response = await axios.post(`${url}api/address/add/`,
      {...address}
     );
     console.log("cart items cart componentxx",response.data)
@@ -120,7 +120,7 @@ const AddressPage = () => {
     console.log(addressList)
   };
   const editAddress = async (address,adderssId) => {
-    const response = await axios.put(`http://localhost:4000/api/address/update/${adderssId}`,
+    const response = await axios.put(`${url}api/address/update/${adderssId}`,
         {...address}
     );
     console.log("address edit items cart componentyy",response.data)
@@ -129,7 +129,7 @@ const AddressPage = () => {
     // console.log(addresses)
   };
   const deleteAddress = async (adderssId) => {
-    const response = await axios.delete(`http://localhost:4000/api/address/delete/${adderssId}`
+    const response = await axios.delete(`${url}api/address/delete/${adderssId}`
     );
     console.log("address edit items cart componentyy",response.data)
     // dispatch(setCartItems(response.data.items));
