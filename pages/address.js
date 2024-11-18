@@ -89,9 +89,14 @@ import { setAddresses } from '@/store/slices/addressSlice';
 
 const AddressPage = () => {
     const user = useSelector((state) => state.user.user);
+    const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
     const dispatch = useDispatch();
-  const userId =user._id?user._id:"";
-  console.log("user id at address component",userId)
+    const [userId,setUserId]=useState("")
+    if(isLoggedIn){const user = useSelector((state) => state.user.user);
+      setUserId(user._id);
+    
+    }
+ 
 
   const [addresses, setAddresses1] = useState([]);
 

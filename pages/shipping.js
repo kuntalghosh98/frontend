@@ -13,7 +13,7 @@ import PaymentSuccessModal from '../components/PaymentSuccessModal';
 
 const ShippingPage = () => {
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
-
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const router = useRouter();
   const dispatch = useDispatch();
 //   const [selectedAddress, setSelectedAddress] = useState(null); // Track selected address
@@ -25,9 +25,13 @@ const ShippingPage = () => {
   let paymentResponse={}
   const orderItems=[]
   let deliveryAddress
+
   console.log("add shipping",selectAddress)
-  const user = useSelector((state) => state.user.user);
-  const userId =user._id;
+  const [userId,setUserId]=useState("")
+  if(isLoggedIn){const user = useSelector((state) => state.user.user);
+    setUserId(user._id);
+  
+  }
   let count=1
 
   
