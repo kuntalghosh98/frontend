@@ -6,7 +6,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'; // Import the bars i
 import Sidebar from '../components/slidebar/Sidebar';
 import OrdersPage from './OrdersPage';
 import CustomerCarePage from './CustomerCarePage';
-import PaymentsPage from './PaymentsPage';
+import Payments from './payments';
 import PersonalInfoPage from './PersonalInfoPage';
 import AddressPage from './address';
 
@@ -27,7 +27,7 @@ const Account = () => {
       case 'customerCare':
         return <CustomerCarePage />;
       case 'payments':
-        return <PaymentsPage />;
+        return <Payments />;
       case 'personalInfo':
         return <PersonalInfoPage />;
       case 'address':

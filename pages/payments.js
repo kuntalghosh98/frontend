@@ -137,7 +137,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import PaymentSuccessModal from '../components/PaymentSuccessModal';
 
-const PaymentsPage = () => {
+const Payments = () => {
   const [amount, setAmount] = useState(500); // Example amount in INR
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(true);
@@ -253,4 +253,4 @@ const PaymentsPage = () => {
   );
 };
 
-export default PaymentsPage;
+export default Payments;
