@@ -43,7 +43,7 @@ console.log(searchWords)
 
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-4">Search Results for "{category}"</h1>
+      <h1 className="text-3xl font-bold mb-4">Search Results for {category}</h1>
       {filteredProducts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {filteredProducts.map(product => (
@@ -54,7 +54,7 @@ console.log(searchWords)
         <>
           {searchWords.length > 0 && anyWordMatches && (
             <div className="text-xl text-gray-600 mb-4">
-              No exact match found for "{category}". Showing similar products:
+              No exact match found for {category}. Showing similar products:
             </div>
           )}
           {searchWords.length > 0 && !anyWordMatches && (
