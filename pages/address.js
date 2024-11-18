@@ -92,7 +92,8 @@ const AddressPage = () => {
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
     const dispatch = useDispatch();
     const [userId,setUserId]=useState("")
-    if(isLoggedIn){const user = useSelector((state) => state.user.user);
+    
+    if(isLoggedIn){
       setUserId(user._id);
     
     }
