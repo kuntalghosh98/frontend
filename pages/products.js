@@ -3,7 +3,7 @@ import { useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux';
 import ProductCard from '@/components/Product/ProductCard';
 
-const products =()=> {
+const Products =()=> {
 const params=useSearchParams();
 const x=params.get("catagory")
 console.log("ll",x)
@@ -50,7 +50,7 @@ console.log(tshirtProducts);
     
 
     </div>
-  )
-}
+  );
+};
 
-export default products
+export default Products;

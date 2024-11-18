@@ -6,7 +6,7 @@ import Router from 'next/router';
 const HorizontalScrollCardItem = ({ imageUrl, route }) => {
 
   const handleClick = () => {
-    Router.push(`/products?catagory=${route}`); // Navigate to the specified route onClick
+    Router.push(`/Products?catagory=${route}`); // Navigate to the specified route onClick
   };
 
   return (
