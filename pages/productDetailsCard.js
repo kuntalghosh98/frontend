@@ -329,7 +329,7 @@ const ProductDetailsCard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
           {suggestions.map((suggestedProduct) => (
             // <ProductSuggestion key={suggestedProduct._id} product={suggestedProduct} />
-            <ProductScrollBanner />
+            <ProductScrollBanner key={suggestedProduct.index}/>
           ))}
         </div>
       </div>

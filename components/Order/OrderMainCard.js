@@ -48,7 +48,7 @@ const OrderMainCard=({items})=> {
     <div className='border m-4 p-4 flex flex-row'onClick={OrderClick}>
         <div className="flex items-center">
             {imageUrl ?(
-                imageUrl.map((url)=><img src={url} alt="item.name" className="w-20 h-20 object-cover" />)
+                imageUrl.map((url)=><img key={url.index} src={url} alt="item.name" className="w-20 h-20 object-cover" />)
             ):"k"}
           {/* {more?(<Image src={plus} alt="itemname" className="w-5 h-5 object-cover" />):""} */}
         </div>
