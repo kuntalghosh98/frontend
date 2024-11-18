@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+/* styles/globals.css */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: white; /* Set to white or any desired color */
+  color: black; /* Set the default text color */
+}
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+.text-70vw {
+  font-size: 9vw;
+}
+
+
+
+/* globals.css */
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, and Opera */
+}
+
+.horizontal-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+.indicator-container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 2rem; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.indicator-line {
+  height: 1rem; /* Adjust height as needed */
+  width: 2rem; /* Adjust width as needed */
+  background-color: gray; /* Default color */
+  margin: 0 0.25rem; /* Space between lines */
+}
+
+.indicator-line.active {
+  background-color: black; /* Active color */
+}
+
+
+
+/* components/ProductScrollBanner/ProductScrollBanner.js*/
+/* styles/globals.css */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
