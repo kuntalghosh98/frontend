@@ -6,7 +6,7 @@ import '../styles/globals.css';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import '../styles/carousel.css';
+
 import '../components/fontawesome';
 import NavBar from '@/components/Header/NavBar';
 
