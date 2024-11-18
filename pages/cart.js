@@ -26,21 +26,21 @@ const Cart = () => {
 
   const user = useSelector((state) => state.user.user);
   
-  if(isLoggedIn){
-  const userId =user._id;
-  
 
-console.log("Kuntal cart")
-console.log("Kuntal cart",isLoggedIn)
+  
   useEffect(() => {
+    if(isLoggedIn){
+    const userId =user._id;
+
     const fetchCart = async () => {
       const response = await axios.get(`http://localhost:4000/api/cart/${userId}`);
       console.log("cart items cart component",response.data.items)
       dispatch(setCartItems(response.data.items));
     };
     fetchCart();
+  }
   }, [ ]);
-}
+
 
 const continueShoping=()=>{
   Router.push('/')
