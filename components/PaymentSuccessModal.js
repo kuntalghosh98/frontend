@@ -1,10 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Player } from 'lottie-react'; // Import from lottie-react
+
 import successAnimation from './Assets/success.png'; // Path to your JSON animation file
 import successGif from './Assets/icons8-success.gif'
 import animation from './Assets/Animation.gif'
 import Image from 'next/image';
+
 
 
 const PaymentSuccessModal = ({ isVisible, onClose }) => {
