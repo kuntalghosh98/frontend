@@ -4,7 +4,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useRouter } from 'next/router';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
-import { url } from '@/constant';
+import { url,base_path } from '@/constant';
 
 const LoginRegister = ({ onClose }) => {
    const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,7 +29,7 @@ const LoginRegister = ({ onClose }) => {
 
     if (token) {
       localStorage.setItem('token', token);
-      router.replace('/'); // Redirect to the home page
+      router.replace(`${base_path}`); // Redirect to the home page
     }
   }, [router]);
   console.log("islogin"+isLoggedIn)
