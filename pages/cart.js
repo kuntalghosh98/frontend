@@ -2,12 +2,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import Image from "next/image";
 import { setCartItems,selectCartCount } from '../store/slices/cartSlice';
+import { setUser,isDataAvailable } from '../store/slices/userSlice';
 import CartItem from '../components/Cart/CartItem';
 import CartSummary from '../components/Cart/CartSummary';
 import Router from 'next/router';
 import { useRouter } from "next/router";
 import { url } from '@/constant';
+import {fetchUserData} from '../commonFun/commonFunction';
+import emptyCart from '../Utility/icons/emptyCart.jpg';
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
@@ -33,45 +37,71 @@ const Cart = () => {
     if(isLoggedIn){
     const userId =user._id;
 
-    const fetchCart = async () => {
-      const response = await axios.get(`${url}api/cart/${userId}`);
-      console.log("cart items cart component",response.data.items)
-      dispatch(setCartItems(response.data.items));
-    };
-    fetchCart();
+   
+    fetchCart(userId);
+  }else{
+    // console.log()
+    fetchUserData(url)
+  .then((data) => {
+    console.log("data----1111",data); //Use the resolved value
+
+    if (data) {
+      fetchCart(data._id);
+      dispatch(setUser(data));
+    }    
+  })
+  .catch((error) => {
+    console.error("Error fetching user data:", error); //Handle any errors
+  })
+    
+    // fetchCart(userId);
   }
   }, [ ]);
 
-
+  const fetchCart = async (userId) => {
+    const response = await axios.get(`${url}api/cart/${userId}`);
+    console.log("cart items cart component",response.data.items)
+    dispatch(setCartItems(response.data.items));
+  };
 const continueShoping=()=>{
   Router.push('/')
 }
 
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="  py-8">
       <h1 className="text-3xl font-bold mb-4">Your Cart</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="col-span-2">
-          {cartItems.length > 0 ? (
-            cartItems.map((item) => <CartItem key={item.id} item={item} />)
-          ) : (
-            <div className=' mt-20 flex justify-center font-bold'>
-              <p className="text-gray-600 justify-center ">Your cart is empty</p>
-            </div>
-            
-          )}
-        </div>
-        {
-          cartItems.length > 0 ?
-          (<CartSummary />)
-          :
-          (<div className=' flex justify-center'><button onClick={continueShoping} className=' bg-green-500 text-white px-4 py-2 rounded'>
-            continue shoping
-            </button></div>)
+      <div className="  ">
+      <div className={`flex flex-col md:flex-row gap-2`}>
+          {/* Cart Items Section */}
+          <div className={`w-full md:w-[60vw]`}>
+            {cartItems.length > 0 ? (
+              cartItems.map((item) => <CartItem key={item.id} item={item} />)
+            ) : (
+              <div className="flex flex-col justify-center items-center min-h-screen">
+                <Image
+                  src={emptyCart}
+                  alt="Empty Wishlist"
+                  className="mb-4 max-w-xs md:max-w-sm lg:max-w-md h-auto"
+                />
+                <button
+                  onClick={() => window.history.back()}
+                  className="mt-4 bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition"
+                >
+                  Back to Shopping
+                </button>
+              </div>
+            )}
+          </div>
 
-        }
-       
+          {/* Cart Summary Section */}
+          <div className={`w-full md:w-[40vw]`}>
+            {cartItems.length > 0 && <CartSummary />}
+          </div>
+        </div>
+
+
+
         
       </div>
     </div>

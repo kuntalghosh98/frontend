@@ -15,7 +15,7 @@ const CategoryCard = ({ product }) => {
         <img
         src={product.imageUrl}
         alt={product.name}
-        className="w-40 h-40 rounded-full object-cover p-2"
+        className="w-40 h-60 rounded-2xl object-cover p-2"
       />
         </div>
       

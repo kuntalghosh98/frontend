@@ -1,19 +1,41 @@
 import React from 'react';
 
 const MediaBanner = (props) => {
-  const bannerUrl=props.banner
-  
+  let bannerUrl=props.imageUrl ? props.imageUrl : "" ;
+  let text=props.text ? props.text : "";
+  let callFrom=props.callFrom ? props.callFrom : "";
+  if(bannerUrl==''){
+    bannerUrl=  'http://localhost:4000/uploads/video11.mp4';
+  }
+ 
+
+  console.log("bannerUrl-----------------------------");
+  console.log(bannerUrl)
   return (
-    <div className="relative w-full h-[80vh] md:h-screen lg:h-screen bg-cover bg-center mb-8">
+    <div className="relative w-full h-[70vh] md:h-[70vh] lg:h-[80vh] bg-cover bg-center mb-8">
       <div className="absolute top-0 left-0 w-full h-full">
-        <img
-          src={bannerUrl}
-          alt="Banner"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <h1 className="text-2xl md:text-4xl lg:text-6xl text-white font-bold text-center">Welcome to Our Store</h1>
-        </div>
+      {bannerUrl?.match(/\.(mp4|webm|ogg)$/) ? (
+      <video
+        src={bannerUrl}
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="w-full h-full object-cover"
+      />
+    ) : (
+      <img
+        src={bannerUrl}
+        alt="Banner"
+        className="w-full h-full object-cover"
+      />
+    )}
+    {text !== "" && (
+ <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+ <h1 className="text-2xl md:text-4xl lg:text-6xl text-white font-bold text-center">{text}</h1>
+</div>
+    )}
+       
       </div>
     </div>
   );

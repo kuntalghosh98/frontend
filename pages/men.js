@@ -3,6 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductCard from '@/components/Product/ProductCard';
+
+// import ProductCard from '../components/ProductScrollBanner/ProductCard';
+
 import MediaBanner from '@/components/MediaBanner';
 import CategoryCardScroll from '@/components/Cards/CategoryCardScroll';
 import { useRouter } from 'next/router';
@@ -73,7 +76,7 @@ const Men = () => {
     const fetchProducts = async () => {
       try {
         // Fetch men's products from your API
-        const response = await axios.get(`${url}/api/products`);
+        const response = await axios.get(`${url}api/products`);
         setProducts(response.data);
         setLoading(false);
       } catch (error) {
@@ -94,11 +97,14 @@ const Men = () => {
         <MediaBanner/>
         <CategoryCardScroll products={productData1}/>
       <h1 className="text-3xl font-bold mb-4">Men Products</h1>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <div className='p-4'>
+        <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
+     
     </div>
   );
 };

@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { url } from '@/constant';
+import Spinner from '@/components/Spinner';
 const VerifyOtp = () => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState(null);
+  const [spinner,setSpinner]=useState(false);
   const router = useRouter();
   const { email } = router.query;
   console.log(email);
   const handleOtpSubmit = async (event) => {
     event.preventDefault();
     try {
+      setSpinner(true);
       const response = await axios.post(`${url}api/users/verify-email-otp`, {
         email,
         otp,
@@ -25,10 +28,11 @@ const VerifyOtp = () => {
       // Redirect to the home page
       router.push('/');
     } catch (err) {
+      setSpinner(false);
       setError('Invalid OTP. Please try again.');
     }
   };
-
+  if(spinner) return <Spinner/>
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <div className="bg-white shadow-md rounded-lg p-6 w-80">

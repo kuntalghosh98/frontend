@@ -79,11 +79,11 @@ const Sidebar = ({ isOpen, toggleSidebar, onSelectCategory,isLargerDevice }) => 
           </li>
           <li className="font-bold">Profile</li>
           <ul className="space-y-2 ml-4">
-            <li className="cursor-pointer hover:font-bold"  onClick={() => {{!isLargerDevice ? toggleSidebar():""} onSelectCategory('payments')}}>Payments</li>
+            <li className="cursor-pointer hover:font-bold"  onClick={() => {{!isLargerDevice ? toggleSidebar():""} onSelectCategory('aboutus')}}>About Us</li>
             <li className="cursor-pointer hover:font-bold"  onClick={() =>{{!isLargerDevice ? toggleSidebar():""}  onSelectCategory('address')}}>Address Book</li>
-            <li className="cursor-pointer hover:font-bold"  onClick={() => {{!isLargerDevice ? toggleSidebar():""} onSelectCategory('personalInfo')}}>
+            {/* <li className="cursor-pointer hover:font-bold"  onClick={() => {{!isLargerDevice ? toggleSidebar():""} onSelectCategory('personalInfo')}}>
               Personal Information
-            </li>
+            </li> */}
           </ul>
         </ul>
       </div>

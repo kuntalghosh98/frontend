@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser,isDataAvailable } from '../store/slices/userSlice';
+import { setUser, isDataAvailable } from '../store/slices/userSlice';
 import { fetchProducts } from '../store/slices/productSlice';
 import axios from 'axios';
 import axiosInstance from '../lib/axios';
@@ -18,15 +18,19 @@ import ProductScrollBanner from '@/components/ProductScrollBanner/ProductScrollB
 import CategoryCardScroll from '@/components/Cards/CategoryCardScroll';
 import { setCartItems } from '../store/slices/cartSlice';
 import { url } from '@/constant';
+import { setAddresses } from '@/store/slices/addressSlice';
+import ReelsBanner from '@/components/Reels/ReelsBanner';
+import ProductScrollList from '@/components/ProductScrollBanner/ProductScrollList';
+import AboutUs from '@/components/AboutUs';
 // import jwt_decode from 'jwt-decode';
 
-const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArrivalList,categoryBanner1 }) => {
+const HomePage = ({ banner, cards, highlightedProduct1, highlightedProduct2, newArrivalList, categoryBanner1, productScrollList }) => {
 
- 
-   
+
+
   // highlightedProducts1();
-  console.log("highlighted newArrivalList",newArrivalList)
-  console.log("---------------------",categoryBanner1);
+  console.log("highlighted newArrivalList", newArrivalList)
+  console.log("-------productScrollList--------------", productScrollList);
   const dispatch = useDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
@@ -39,7 +43,7 @@ const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArr
     const token = localStorage.getItem('token');
     try {
       console.log("home page token", token)
-      const response = await axios.get(`${url}/api/users/profile`, {
+      const response = await axios.get(`${url}api/users/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -53,7 +57,7 @@ const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArr
   };
   const fetchCart = async () => {
     try {
-      const response = await axios.get(`${url}/api/cart/${userId}`);
+      const response = await axios.get(`${url}api/cart/${userId}`);
       console.log("cart items", response.data.items)
 
       dispatch(setCartItems(response.data.items));
@@ -62,7 +66,13 @@ const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArr
     }
 
   };
-
+  const fetchAddress = async () => {
+    const response = await axios.get(`http://localhost:4000/api/address/${userId}`);
+    console.log("cart items cart componentyy", response.data)
+    dispatch(setAddresses(response.data));
+    // setAddresses1(response.data)
+    console.log("1")
+  };
   // Call fetchUserData when the component mounts or page loads
   useEffect(() => {
     dispatch(isDataAvailable(true))
@@ -74,6 +84,7 @@ const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArr
     if (userId) {
       console.log("user id present");
       fetchCart();
+      fetchAddress();
     }
   }, [userId]);
 
@@ -81,7 +92,7 @@ const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArr
   useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchProducts());
-      
+
     }
   }, [dispatch, status]);
 
@@ -107,22 +118,31 @@ const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArr
   console.log("home page:")
   return (
 
-    <div className="w-full mx-auto bg-red-100">
-      <NavBar />
+    <div className="w-full mx-auto bg-red-50">
+      {/* <NavB ar /> */}
 
-      <MediaBanner banner={banner} />
-      <div><h6 style={{ "display": "flex", "justifyContent": "center", "width": "full", "padding": "10px", "fontSize": "60px" }}>HEIGHLIGHTS</h6></div>
+      <MediaBanner  text="Welcome to Our Store" />
+      <div><h6 className="flex justify-center w-full p-2 text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-semibold">CATAGORY</h6></div>
       <div className="w-full py-4">
         {/* <Carousel items={cards} /> */}
-        <HorizontalScrollCard cards={categoryBanner1[1].cards} />
+        <HorizontalScrollCard cards={categoryBanner1[0].cards} />
       </div>
-      <Banner cardData={highlightedProduct1}  />
-      <div><h6 style={{ "display": "flex", "justifyContent": "center", "width": "full", "padding": "10px", "fontSize": "60px" }}>CATAGORY</h6></div>
-      <HorizontalScrollCard cards={categoryBanner1[0].cards} />
-      <div>
-        <Banner cardData={highlightedProduct2}  />
+      <Banner cardData={highlightedProduct1} />
+      
+      {/* <HorizontalScrollCard cards={categoryBanner1[0].cards} /> */}
 
-        <div><h6 style={{ "display": "flex", "justifyContent": "center", "width": "full", "padding": "10px", "fontSize": "60px" }}>New Arrival</h6></div>
+
+
+      {/* <div>
+        <img
+          src={`${url}uploads/flex.png`}
+          alt='flex'
+        />
+      </div> */}
+      <div>
+        {/* <Banner cardData={highlightedProduct2} /> */}
+
+        <div><h6 className="flex justify-center w-full p-2 text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-semibold">New Arrival</h6></div>
         <ProductScrollBanner products={newArrivalList} />
 
         {/* <CategoryCardScroll products={productData1}/> */}
@@ -137,6 +157,13 @@ const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArr
             <p className="text-gray-600">No products available</p>
           )}
         </div> */}
+      <ReelsBanner />
+      <div> <h6 className="flex justify-center w-full p-2 text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-semibold ">{productScrollList[0].name}</h6></div>
+      <div className=''>
+
+      <ProductScrollBanner products={productScrollList[0].productIds} />
+      </div>
+      
     </div>
 
   );
@@ -145,38 +172,40 @@ const HomePage = ({ banner, cards,highlightedProduct1,highlightedProduct2,newArr
 export const getServerSideProps = async () => {
   try {
 
-    const highlightedProducts= await axios.get(`${url}/api/highlighted-products`);
-   const highlightedProduct1=highlightedProducts.data[0];
-   const highlightedProduct2=highlightedProducts.data[1];
-   const newArrivals=await axios.get(`${url}/api/newarrivals`)
-   const newArrivalList=newArrivals.data
-   
-    const banner = `${url}/uploads/banner_ 1720212570132.jpg`;
- const categoryBanner=await axios.get(`${url}/api/banners/`)
- const categoryBanner1=categoryBanner.data;
- console.log(categoryBanner.data)
+    const highlightedProducts = await axios.get(`${url}api/highlighted-products`);
+    const highlightedProduct1 = highlightedProducts.data[0];
+    const highlightedProduct2 = highlightedProducts.data[1];
+    const newArrivals = await axios.get(`${url}api/newarrivals`);
+    const productScrollListObj = await axios.get(`${url}api/product-scroll-list`);
+    const newArrivalList = newArrivals.data;
+    const productScrollList = productScrollListObj.data;
+    const banner = `${url}uploads/banner_ 1720212570132.jpg`;
+    const categoryBanner = await axios.get(`${url}api/banners/`)
+    const categoryBanner1 = categoryBanner.data;
+    console.log(categoryBanner.data)
     const cards = [
-      { imageUrl: `${url}/uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
-      { imageUrl: `${url}/uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
-      { imageUrl: `${url}/uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
-      { imageUrl: `${url}/uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
+      { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
+      { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
+      { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
+      { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
 
       // Add more cards as needed
     ];
-    
-   
+
+
 
 
     return {
       props: {
-       
+
         banner,
         cards,
         highlightedProduct1,
         highlightedProduct2,
         newArrivalList,
-        categoryBanner1
-      
+        categoryBanner1,
+        productScrollList
+
       },
     };
   } catch (error) {

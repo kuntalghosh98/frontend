@@ -2,20 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faShoppingBag, faBars, faTimes, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faShoppingBag, faBars, faTimes, faUser,faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from "@fortawesome/free-solid-svg-icons"; // Filled heart
+
 import NavLink from './Navlink'; // Import your custom NavLink component here
 import SearchBar from './SearchBar'; // Import SearchBar component
 import LoginRegister from '@/pages/LoginRegister';
 import { selectCartCount } from '../../store/slices/cartSlice';
 import Router from 'next/router';
 import { RouterContext } from 'next/dist/server/future/route-modules/app-page/vendored/contexts/entrypoints';
-
-
+import logo2 from "../../Utility/icons/logo2.png";
+import greenTik from "../../Utility/icons/check2.png";
 const NavBar = () => {
+  const [isWomenDropdownOpen, setIsWomenDropdownOpen] = useState(false);
   const [navBackground, setNavBackground] = useState('bg-transparent');
   const [isOpen, setIsOpen] = useState(false);
   const [brandPosition, setBrandPosition] = useState('translate-y-20 left-1/2 transform -translate-x-1/2 whitespace-nowrap');
-  const [brandSize, setBrandSize] = useState('text-white text-70vw');
+  const [brandSize, setBrandSize] = useState('text-white text-70vw h-8');
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false); // State for search window
   const [textColor, settextColor] = useState('text-whhite')
@@ -24,6 +27,9 @@ const NavBar = () => {
   console.log(isLoggedIn)
   const isDefaultRoute = router.pathname === '/';
   const cartCount = useSelector(selectCartCount);
+  const toggleDropdown = () => {
+    setIsWomenDropdownOpen((prev) => !prev);
+  };
   console.log(cartCount);
   // const [isLoggedIn,setIsLoggedIn]=useState(false)
 
@@ -43,6 +49,9 @@ const NavBar = () => {
   };
   const handleBagClick = () => {
     router.push('/cart');
+  };
+  const handleWishListClick = () =>{
+    router.push('/wishList');
   };
   const handleLoginClick = () => {
     console.log("login");
@@ -115,10 +124,12 @@ const handleClick=()=>{
 
         <div className="text-transparent text-xl font-bold" onClick={handleClick}      >Classic Aura</div>
 
-        <div className={`${isDefaultRoute ? textColor : "text-black"} hidden md:flex space-x-4`}>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/accessories">Accessories</NavLink>
+        <div className={`${isDefaultRoute ? textColor : "text-black"} hidden md:flex space-x-4 z-50`}>
+          <NavLink href="/Products?category=women+jewellery+rings" className="hover:opacity-80">Rings</NavLink>
+          <NavLink href="/Products?category=women+jewellery+earrings" className="hover:opacity-80">Earrings</NavLink>
+          <NavLink href="/Products?category=women+jewellery+necklaces" className="hover:opacity-80">Necklaces</NavLink>
+          <NavLink href="/Products?category=women+jewellery+bracelets" className="hover:opacity-80">Bracelets</NavLink>
+          <NavLink href="/Products?category=women+jewellery+bangles" className="hover:opacity-80">Bangles</NavLink>
         </div>
 
         <div className="flex space-x-4 md:hidden">
@@ -129,7 +140,9 @@ const handleClick=()=>{
               onClick={toggleSearch} // Toggle search window on click
             />
           </div>
-
+          <div className="relative">
+        <FontAwesomeIcon icon={faHeart} className={`${isDefaultRoute ? textColor : "text-black"} hover:text-gray-500 cursor-pointer`} onClick={handleWishListClick}/>
+        </div>
           <div className="relative">
             <FontAwesomeIcon
               icon={faShoppingBag}
@@ -142,7 +155,7 @@ const handleClick=()=>{
               </span>
             )}
           </div>
-
+          
           <div className="relative">
             <FontAwesomeIcon
               icon={isOpen ? faTimes : faBars}
@@ -162,6 +175,10 @@ const handleClick=()=>{
             onClick={toggleSearch} // Toggle search window on click
           />
         </div>
+        <div className="relative">
+        <FontAwesomeIcon icon={faHeart} className={`${isDefaultRoute ? textColor : "text-black"} hover:text-gray-500 cursor-pointer`} onClick={handleWishListClick}/>
+        </div>
+        
         <div className="relative">
         <FontAwesomeIcon icon={faShoppingBag} className={`${isDefaultRoute ? textColor : "text-black"} hover:text-gray-500 cursor-pointer`} onClick={handleBagClick} />
         {cartCount > 0 && ( // Only show the count if it's greater than 0
@@ -193,10 +210,12 @@ const handleClick=()=>{
           } transition-transform duration-300 ease-in-out z-40`}
         style={{ width: '80%', maxWidth: '500px' }}
       >
-        <div className="p-4 flex flex-col space-y-4 h-[85vh]">
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/accessories">Accessories</NavLink>
+        <div className="p-4 flex flex-col space-y-4 h-[85vh] z-10">
+        <NavLink href="/Products?category=women+jewellery+rings" className="hover:opacity-80">Rings</NavLink>
+          <NavLink href="/Products?category=women+jewellery+earrings" className="hover:opacity-80">Earrings</NavLink>
+          <NavLink href="/Products?category=women+jewellery+necklaces" className="hover:opacity-80">Necklaces</NavLink>
+          <NavLink href="/Products?category=women+jewellery+bracelets" className="hover:opacity-80">Bracelets</NavLink>
+          <NavLink href="/Products?category=women+jewellery+bangles" className="hover:opacity-80">Bangles</NavLink>
 
 
         </div>

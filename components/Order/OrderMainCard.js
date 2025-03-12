@@ -6,7 +6,7 @@ import OrderdItem from './OrderdItem';
 import OrderSubCard from './OrderSubCard';
 import plus from '../Assets/plus.png'
 import Image from 'next/image';
-
+import { url,urlImg } from '@/constant';
 const OrderMainCard=({items})=> {
     console.log("order main card",items)
     // const [more,setMore]=useState(false)
@@ -48,15 +48,16 @@ const OrderMainCard=({items})=> {
     <div className='border m-4 p-4 flex flex-row'onClick={OrderClick}>
         <div className="flex items-center">
             {imageUrl ?(
-                imageUrl.map((url)=><img key={url.index} src={url} alt="item.name" className="w-20 h-20 object-cover" />)
+                imageUrl.map((url)=><img key={url.index} src={`${urlImg}${url}`} alt="item.name" className="w-20 h-20 object-cover pr-1" />)
             ):"k"}
           {/* {more?(<Image src={plus} alt="itemname" className="w-5 h-5 object-cover" />):""} */}
         </div>
         <div className='w-full flex justify-end '>
           <div>
           {/* <p>{items._id}</p> */}
-          <p>{items.createdAt.slice(0, 10)}</p>
-          <p>{items.payment.amount/100}</p>
+          <p>{`Order date : ${items.createdAt.slice(0, 10)}`}</p>
+          <p>{`Total Amount : ${items.payment.amount/100}`}</p>
+          <p>{`Order Id : ${items._id}`}</p>
           </div>
            
         </div>

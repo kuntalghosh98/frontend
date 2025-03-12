@@ -9,11 +9,21 @@ import AddressList from '../components/Address/AddressList';
 import axios from 'axios';
 import { setCartItems,selectCartCount } from '../store/slices/cartSlice';
 import PaymentSuccessModal from '../components/PaymentSuccessModal';
+import { setAddresses } from '@/store/slices/addressSlice';
 import { url } from '@/constant';
 
 const ShippingPage = () => {
-  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
+  const isDataAvailable = useSelector((state) => state.user.isDataAvailable);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  useEffect(()=>{
+    if(!isDataAvailable){
+      console.log("if isDataAvailable")
+      router.push('/')
+    }
+    
+  },[])
+
+  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
 //   const [selectedAddress, setSelectedAddress] = useState(null); // Track selected address
@@ -25,17 +35,14 @@ const ShippingPage = () => {
   let paymentResponse={}
   const orderItems=[]
   let deliveryAddress
-
   console.log("add shipping",selectAddress)
-  const [userId,setUserId]=useState("")
-  const user = useSelector((state) => state.user.user);
+  let userId="";
   if(isLoggedIn){
-    setUserId(user._id);
-  
+    const user = useSelector((state) => state.user.user);
+   userId =user._id;
   }
-  let count=1
-
   
+  let count=1
   const cartItems = useSelector((state) => state.cart.items);
   const deliveryDate = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString(); // Expected delivery in 5 days
 
@@ -49,30 +56,31 @@ const ShippingPage = () => {
   const selectAddressHanddler=()=>{
 
   }
+  const fetchCart = async () => {
+    const response = await axios.get(`${url}api/cart/${userId}`);
+    console.log("cart items shiping component",response.data.items)
+    // dispatch(setCartItems(response.data.items));
+    let arr=response.data.items
+    if(arr.length>=1){
+      arr.forEach(element => {
+        let itemObj={
+          productId:element.productId._id ,
+          size:element.size,
+          variantColor:element.veriantColor,
+          quantity:element.quantity,
+          price:element.productId.price,
+          appliedDiscount:0
+        }
+        console.log(itemObj)
+        orderItems.push(itemObj)
+      });
+    }
+    console.log("oredritem  ",orderItems)
+  };
 
   useEffect(() => {
-    const fetchCart = async () => {
-      const response = await axios.get(`${url}api/cart/${userId}`);
-      console.log("cart items shiping component",response.data.items)
-      // dispatch(setCartItems(response.data.items));
-      let arr=response.data.items
-      if(arr.length>=1){
-        arr.forEach(element => {
-          let itemObj={
-            productId:element.productId._id ,
-            size:element.size,
-            variantColor:element.veriantColor,
-            quantity:element.quantity,
-            price:element.productId.price,
-            appliedDiscount:0
-          }
-          console.log(itemObj)
-          orderItems.push(itemObj)
-        });
-      }
-      console.log("oredritem",orderItems)
-    };
-    fetchCart();
+   
+   
    
   }, []);
   
@@ -109,7 +117,7 @@ console.log("devivery address",deliveryAddress)
   const amount=totalPrice1
     //------
     console.log("TOTAL",typeof(totalPrice1))
-
+   
 
 const initiatePayment = async () => {
   if (selectAddress){
@@ -117,7 +125,7 @@ const initiatePayment = async () => {
       setIsPaymentLoading(true);
 
       // Step 1: Create an order by calling the backend API
-      const { data } = await axios.post(`${url}api/payment/order`, {
+      const { data } = await axios.post('http://localhost:4000/api/payment/order', {
         amount: amount , // Amount in paisa (for Razorpay)
         currency: 'INR',
       });
@@ -147,7 +155,7 @@ const initiatePayment = async () => {
           };
 
           // Verify payment by calling the backend
-          const result = await axios.post(`${url}api/payment/verify`, paymentData);
+          const result = await axios.post('http://localhost:4000/api/payment/verify', paymentData);
           console.log("result",result.data)
           if (result.data.success) {
             if(createOrderData && paymentData){
@@ -161,29 +169,23 @@ const initiatePayment = async () => {
                 receipt:createOrderData.receipt,
                 status:"completed"
               }
-              const order=await axios.post(`${url}api/orders/create`, {
+              
+              const order=await axios.post('http://localhost:4000/api/orders/create', {
                 userId:userId,
-                 items:orderItems,
-                  address:deliveryAddress,
-                   paymentResponse:paymentResponse
+                address:deliveryAddress,
+                paymentResponse:paymentResponse
               })
               console.log("successful payment done",userId)
-              const removeCart=await axios.delete(`${url}api/cart/clear`,
+              const removeCart=await axios.delete('http://localhost:4000/api/cart/clear',
                 {data:{
                 userId
               }})
-              console.log("successful payment cleare cart done",removeCart)
+              // console.log("successful payment cleare cart done",removeCart)
 
-              const response = await axios.get(`${url}api/cart/${userId}`);
+              const response = await axios.get(`http://localhost:4000/api/cart/${userId}`);
               
               dispatch(setCartItems(response.data.items));
               setIsPaymentSuccess(true);
-
-              // window.location.href = '/paymentsuccess';
-              // console.log("successful payment done1",userId)
-              // console.log("successful payment done2",orderItems)
-              // console.log("successful payment done3",deliveryAddress)
-              // console.log("successful payment done4",paymentResponse)
             }
            
           } else {
@@ -257,7 +259,7 @@ const initiatePayment = async () => {
     console.log("paymentResponse",paymentResponse)
     console.log("deliveryAddress",deliveryAddress)
    if(count==1){
-     const order=await axios.post(`${url}api/orders/create`, {
+     const order=await axios.post('http://localhost:4000/api/orders/create', {
        userId:userId,
         items:orderItems,
          address:deliveryAddress,
@@ -267,7 +269,13 @@ const initiatePayment = async () => {
    }
  }
  const pushToAddress=()=>{
-  router.push('/address')
+  router.push({
+    pathname: '/address',
+    query: {
+      from: 'shipping',
+     
+    },
+  });
  }
   return (
     <div className="container mx-auto p-6">
@@ -282,7 +290,7 @@ const initiatePayment = async () => {
              address={selectAddress}
              />
 
-                <AddressList/>
+               
           </div>
         ) : (
           <div>
@@ -290,13 +298,17 @@ const initiatePayment = async () => {
             <AddressForm />
           </div>
         )}
-
+        {addresses.length>0 ?
+        (<AddressList/>):
+      (<div></div>)
+    }
+  
       </div>
 
       {/* Expected Delivery Date */}
       <div className="mb-6">
         {addresses?
-        <p className="text-lg">Expected Delivery Date: {deliveryDate}</p>
+        <p className="text-lg">Expected Delivery Date:</p>
         :""}
       </div>
 

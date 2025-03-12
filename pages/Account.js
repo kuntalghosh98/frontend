@@ -6,9 +6,11 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'; // Import the bars i
 import Sidebar from '../components/slidebar/Sidebar';
 import OrdersPage from './OrdersPage';
 import CustomerCarePage from './CustomerCarePage';
-import Payments from './payments';
+import PaymentsPage from './PaymentsPage';
 import PersonalInfoPage from './PersonalInfoPage';
 import AddressPage from './address';
+import ContactUs from '@/components/ContactUs';
+import AboutUs from '@/components/AboutUs';
 
 const Account = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -25,9 +27,9 @@ const Account = () => {
       case 'orders':
         return <OrdersPage />;
       case 'customerCare':
-        return <CustomerCarePage />;
-      case 'payments':
-        return <Payments />;
+        return <ContactUs />;
+      case 'aboutus':
+        return <AboutUs />;
       case 'personalInfo':
         return <PersonalInfoPage />;
       case 'address':

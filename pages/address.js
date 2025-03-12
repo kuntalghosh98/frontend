@@ -1,115 +1,56 @@
-// // pages/address.js
-// import React, { useState } from 'react';
-// import AddressForm from '../components/Address/AddressForm'; // Create this form component
-// import AddressCard from '../components/Address/AddressCard'; // Create this card component
-
-// const AddressPage = () => {
-//   const [addresses, setAddresses] = useState([
-//     {
-//       userId: "66d223a317934303f16f1a51",
-//       name: "John Doe",
-//       mobileNumber: "9876543210",
-//       pincode: "123456",
-//       locality: "Locality Name",
-//       flatNumber: "Flat 101, Building A",
-//       landmark: "Near Park",
-//       district: "City Name",
-//       state: "State Name",
-//       addressType: "Home",
-//       isDefault: true,
-//     },
-//   ]);
-//   const [isEditing, setIsEditing] = useState(false);
-//   const [currentAddress, setCurrentAddress] = useState(null);
-//   const [userId,setUserId]=useState("")
-
-//   const handleEdit = (address) => {
-//     setCurrentAddress(address);
-//     setIsEditing(true);
-//   };
-
-//   const handleSave = (updatedAddress) => {
-//     const updatedAddresses = addresses.map((addr) =>
-//       addr.userId === updatedAddress.userId ? updatedAddress : addr
-//     );
-//     setAddresses(updatedAddresses);
-//     setIsEditing(false);
-//   };
-
-//   const handleAddNew = (address) => {
-//     setUserId(address.userId)
-//     setIsEditing(true);
-//     setCurrentAddress(null);
-//   };
-
-//   return (
-//     <div className="container mx-auto py-8">
-//       <h1 className="text-2xl font-bold mb-4">Your Addresses</h1>
-//       <div className="mb-4">
-//         <button
-//           className="bg-blue-500 text-white px-4 py-2 rounded"
-//           onClick={handleAddNew}
-//         >
-//           Add New Address
-//         </button>
-//       </div>
-//       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//         {addresses.map((address) => (
-//           <AddressCard
-//             key={address.userId}
-//             address={address}
-//             onEdit={() => handleEdit(address)}
-//           />
-//         ))}
-//       </div>
-//       {isEditing && (
-//         <AddressForm
-//           userId={userId}
-//           address={currentAddress}
-//           onSave={handleSave}
-//           onCancel={() => setIsEditing(false)}
-//         />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default AddressPage;
 
 
 
 
 
 import React, { useEffect, useState } from 'react';
+
 import axios from 'axios';
 import AddressForm from '../components/Address/AddressForm';
 import AddressCard from '../components/Address/AddressCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAddresses } from '@/store/slices/addressSlice';
-import { url } from '@/constant';
+import { setAddresses,selectAddress } from '@/store/slices/addressSlice';
+import { Router, useRouter } from 'next/router';
 const AddressPage = () => {
-    const user = useSelector((state) => state.user.user);
-    const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-    const dispatch = useDispatch();
-    const [userId,setUserId]=useState("")
-    
-    if(isLoggedIn){
-      setUserId(user._id);
-    
-    }
- 
-
+  const router=useRouter()
+  const { from } = router.query;
+  const isDataAvailable = useSelector((state) => state.user.isDataAvailable);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const user = useSelector((state) => state.user.user);
   const [addresses, setAddresses1] = useState([]);
+  const dispatch = useDispatch();
+  console.log("from address page---",isDataAvailable)
+  console.log(isDataAvailable)
+  
+  useEffect(() => {
+    if (!isDataAvailable) {
+      router.push('/');
+    }
+  }, [isDataAvailable, router]);
+  let userId ="";
+  
+  useEffect(() => {
+    if (isLoggedIn && user) {
+      fetchAddress();
+    }
+  }, [isLoggedIn, user]);
+    
+  
+  console.log("user id at address component",userId)
+
+  
 
   const fetchAddress = async () => {
-    const response = await axios.get(`${url}api/address/${userId}`);
+    const response = await axios.get(`http://localhost:4000/api/address/${user._id}`);
     console.log("cart items cart componentyy",response.data)
     dispatch(setAddresses(response.data));
     setAddresses1(response.data)
     console.log(addresses)
   };
+ 
+ 
   const addAddress = async (address) => {
-    const response = await axios.post(`${url}api/address/add/`,
+    const response = await axios.post(`http://localhost:4000/api/address/add/`,
      {...address}
     );
     console.log("cart items cart componentxx",response.data)
@@ -120,7 +61,7 @@ const AddressPage = () => {
     console.log(addressList)
   };
   const editAddress = async (address,adderssId) => {
-    const response = await axios.put(`${url}api/address/update/${adderssId}`,
+    const response = await axios.put(`http://localhost:4000/api/address/update/${adderssId}`,
         {...address}
     );
     console.log("address edit items cart componentyy",response.data)
@@ -129,7 +70,7 @@ const AddressPage = () => {
     // console.log(addresses)
   };
   const deleteAddress = async (adderssId) => {
-    const response = await axios.delete(`${url}api/address/delete/${adderssId}`
+    const response = await axios.delete(`http://localhost:4000/api/address/delete/${adderssId}`
     );
     console.log("address edit items cart componentyy",response.data)
     // dispatch(setCartItems(response.data.items));
@@ -139,9 +80,7 @@ const AddressPage = () => {
 
 
 
-  useEffect(()=>{
-      fetchAddress()
-  },[])
+ 
   
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -160,7 +99,14 @@ const AddressPage = () => {
     
     setIsModalOpen(true);
   };
-
+  const handleSelect = (id) => {
+    console.log("selected",id)
+    dispatch(selectAddress(id));
+   // Close the address list after selecting an address
+ 
+    router.push('/shipping')
+   
+  };
   const handleDelete = (addressId) => {
     
  console.log("delete function call",addressId)
@@ -216,6 +162,7 @@ const AddressPage = () => {
             address={address} 
             onEdit={handleEdit} 
             onDelete={handleDelete} 
+            handleSelect={handleSelect}
           />
         ))}
       </div>
@@ -235,3 +182,7 @@ const AddressPage = () => {
 };
 
 export default AddressPage;
+
+
+
+

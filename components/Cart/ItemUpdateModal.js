@@ -5,7 +5,7 @@ const ItemUpdateModal = ({ isOpen, onClose, item, availableSizes, onUpdate,isSiz
   console.log("isSizeAvailable",isSizeAvailable)
   const [selectedSize, setSelectedSize] = useState(item.size);
   const [quantity, setQuantity] = useState(item.quantity);
-
+const [stock,setStock]=useState(12);
   if (!isOpen) return null; // Don't render the modal if it's not open
 
   return (
@@ -16,23 +16,26 @@ const ItemUpdateModal = ({ isOpen, onClose, item, availableSizes, onUpdate,isSiz
 
         {/* Size Selection */}
         {isSizeAvailable ? (
-           <div className="mb-4">
-           <h3 className="font-semibold mb-2">Select Size</h3>
-           <div className="flex space-x-2">
-             {availableSizes.map((size) => (
-               <button
-                 key={size}
-                 className={`px-4 py-2 border rounded ${selectedSize === size ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-                 onClick={() => setSelectedSize(size)}
-               >
-                 {size}
-               </button>
-             ))}
-           </div>
-         </div>
-        ):(
-          <div></div>
-        )}
+  <div className="mb-4">
+    <h3 className="font-semibold mb-2">Select Size</h3>
+    <div className="flex space-x-2">
+      {availableSizes.map((sizeObj) => (
+        <button
+          key={sizeObj._id} // Use a unique key (like _id)
+          className={`px-4 py-2 border rounded ${selectedSize === sizeObj.size ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => { setSelectedSize(sizeObj.size);
+             setStock(sizeObj.stock);}
+          } // Set size, not the whole object
+        >
+          {sizeObj.size} {/* Display only the size */}
+        </button>
+      ))}
+    </div>
+  </div>
+) : (
+  <div></div>
+)}
+
        
 
         {/* Quantity Selection */}
@@ -47,7 +50,9 @@ const ItemUpdateModal = ({ isOpen, onClose, item, availableSizes, onUpdate,isSiz
             </button>
             <span>{quantity}</span>
             <button
-              onClick={() => setQuantity(quantity + 1)}
+              onClick={() => setQuantity((prevQuantity) => 
+                prevQuantity < stock ? prevQuantity + 1 : prevQuantity
+              )}
               className="px-4 py-2 bg-gray-200 border rounded"
             >
               +

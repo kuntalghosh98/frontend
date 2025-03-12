@@ -12,11 +12,11 @@ const Banner = ({ cardData,productData=[] }) => {
     console.log("banner")
   return (
     <div className="flex lg:flex-row flex-col w-[100hw]">
-    <div className="w-full lg:w-[50%] h-[70vh] bg-white">
-      <BannerCard imageUrl={`${url}/uploads/${cardData.image}`} />
+    <div className="w-full lg:w-[50%] sm:h-auto lg:h-[80h] flex justify-center bg-white p-4">
+      <BannerCard imageUrl={`${url}uploads/${cardData.image}`} />
     </div>
    
-    <div className="w-full lg:w-[50%] sm:h-auto lg:h-[70vh] flex justify-center items-center bg-white ">
+    <div className="w-full lg:w-[50%] sm:h-auto lg:h-[80h]  flex justify-center items-center bg-white ">
        <BannerProducts products={cardData.products}/>
       
     </div>

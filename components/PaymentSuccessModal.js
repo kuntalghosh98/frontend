@@ -22,7 +22,7 @@ const PaymentSuccessModal = ({ isVisible, onClose }) => {
         {/* Background overlay */}
         <div
           className="fixed inset-0 bg-black opacity-50"
-          onClick={onClose}
+          // onClick={onClose}
         ></div>
 
         {/* Success Modal */}

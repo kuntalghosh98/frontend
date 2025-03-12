@@ -29,9 +29,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-const AddressCard = ({ address, onEdit, onDelete }) => {
+const AddressCard = ({ address, onEdit, onDelete,handleSelect }) => {
     const router = useRouter();
     const isroute= router.pathname === '/Account';
+    const isrouteToSelect=router.pathname==='/address'
   return (
     <div className="border p-4 rounded shadow-lg">
       <h3 className="text-lg font-bold">{address.name}</h3>
@@ -46,8 +47,23 @@ const AddressCard = ({ address, onEdit, onDelete }) => {
         <span className="bg-green-200 text-green-700 px-2 py-1 rounded-full text-sm">Default</span>
       )} */}
       <span className="text-green-700 px-1 py-1 rounded-full text-sm font-bold">{address.isDefault ? "Default":""}</span>
-      {isroute?
+     
+      {isrouteToSelect?
       <div className="flex justify-end mt-4 space-x-2">
+          <button 
+        onClick={() => handleSelect(address._id)} 
+        className="bg-black text-white px-4 py-2 rounded"
+      >
+        Select
+      </button>
+      </div>
+      :""
+        }
+     
+      {isroute ?
+      <div className="flex justify-end mt-4 space-x-2">
+        
+        
         <button 
           onClick={() => onEdit(address)} 
           className="bg-black text-white px-4 py-2 rounded"

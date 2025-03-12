@@ -18,7 +18,7 @@ console.log("card--------------------------------",cards)
        
       >
         {cards.map((card, index) => (
-          <HorizontalScrollCardItem key={index} imageUrl={`${url}/uploads/${card.image}`} route={card.categoryName} />
+          <HorizontalScrollCardItem key={index} imageUrl={`${url}uploads/${card.image}`} insideimage={`${url}uploads/${card.insideimage}`} route={card.categoryName} />
         ))}
       </div>
    

@@ -1,0 +1,36 @@
+.google-logo {
+    display: flex;
+    font-size: 64px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+  }
+  
+  .google-logo span {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .g {
+    color: #4285F4; /* Blue */
+  }
+  
+  .o1 {
+    color: #EA4335; /* Red */
+  }
+  
+  .o2 {
+    color: #FBBC05; /* Yellow */
+  }
+  
+  .g-l {
+    color: #4285F4; /* Blue */
+  }
+  
+  .l {
+    color: #34A853; /* Green */
+  }
+  
+  .e {
+    color: #EA4335; /* Red */
+  }
+  

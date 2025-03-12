@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { url } from '@/constant';
+import { base_path, url } from '@/constant';
 const Loading = () => {
   const router = useRouter();
 
@@ -30,7 +30,7 @@ const Loading = () => {
           // Example: dispatch(setUserData(response.data));
           
           // Redirect to the home page
-          router.push('/');
+          router.replace('/');
         } catch (error) {
           console.error('Error fetching user data:', error);
           // Handle token expiration or invalid token

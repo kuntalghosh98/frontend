@@ -1,58 +1,46 @@
-// components/Banner/BannerProducts.js
-
 import React from 'react';
 import Router from 'next/router';
+import { urlImg } from '@/constant';
 
 const BannerProducts = ({ products }) => {
+  console.log("bannercard-------------------*", products);
 
-  console.log("bannercard",products)
   const handleClick = (route) => {
-    Router.push(`./productDetailsCard?id=${route}`)// Navigate to the specified route onClick
+    Router.push(`./productDetailsCard?id=${route}`);
   };
 
   const getGridClasses = () => {
     switch (products.length) {
       case 1:
-        return "w-[50vh] h-[50vh]  justify-center items-center px-10";
+        return "w-[50vh] h-[50vh] flex justify-center items-center px-10";
       case 2:
-        return "grid grid-cols-2 gap-4 flex w-full  h-[40vh]";
+        return "grid grid-cols-2 gap-4 w-full h-[40vh]";
       case 3:
-        return "w-full flex-col grid grid-cols-2 gap-4 h-[70vh] justify-center items-center";
       case 4:
-        return "w-full flex-col grid grid-cols-2 gap-4 h-[70vh] justify-center items-center";
-      default:
-        return "";
-    }
-  };
-
-  const getItemClasses = () => {
-    switch (products.length) {
-      case 1:
-        return "w-full h-full";
-      case 2:
-        return "w-full h-full";
-      case 3:
-        return "w-full h-full sm:max-w-80";
-      case 4:
-        return "w-full h-full sm:max-w-80";
+        return "grid grid-cols-2 gap-4 w-full h-auto";
       default:
         return "";
     }
   };
 
   return (
-    <div className={`${getGridClasses()} p-4 overflow-auto`}>
-      {products.map((product, index) => (
+    <div className={`${getGridClasses()} p-4  `}>
+      {products.map((product) => (
         <div 
           key={product._id} 
-          className={`bg-white rounded-lg shadow-md overflow-hidden cursor-pointer ${getItemClasses()} ${products.length === 3 && index === 2 ? ' flex justify-center' : ''}`}
+          className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
           onClick={() => handleClick(product._id)}
         >
-          <div className="w-full">
-            <img src={product.imageUrl} alt="Product Image" className="w-full h-3/4 object-cover" />
-            <div className="p-2">
-              <h3 className="text-lg font-semibold">{product.name}</h3>
-              <p className="text-sm text-gray-600">${product.price}</p>
+          {/* Ensure the height is balanced */}
+          <div className="w-full flex flex-col h-full">
+            <img 
+              src={`${urlImg}${product.variants[0].imageUrls[0]}`} 
+              alt="Product Image" 
+              className="w-full h-[200px] object-cover"
+            />
+            <div className="p-2 flex flex-col items-center text-center">
+              <h3 className="text-lg font-semibold truncate w-full">{product.name}</h3>
+              <p className="text-sm text-gray-600">₹{product.price}</p>
             </div>
           </div>
         </div>
