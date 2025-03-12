@@ -11,6 +11,7 @@ import AddressCard from '../components/Address/AddressCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAddresses,selectAddress } from '@/store/slices/addressSlice';
 import { Router, useRouter } from 'next/router';
+import { url } from '@/constant';
 const AddressPage = () => {
   const router=useRouter()
   const { from } = router.query;
@@ -41,7 +42,7 @@ const AddressPage = () => {
   
 
   const fetchAddress = async () => {
-    const response = await axios.get(`http://localhost:4000/api/address/${user._id}`);
+    const response = await axios.get(`${url}api/address/${user._id}`);
     console.log("cart items cart componentyy",response.data)
     dispatch(setAddresses(response.data));
     setAddresses1(response.data)
@@ -50,7 +51,7 @@ const AddressPage = () => {
  
  
   const addAddress = async (address) => {
-    const response = await axios.post(`http://localhost:4000/api/address/add/`,
+    const response = await axios.post(`${url}api/address/add/`,
      {...address}
     );
     console.log("cart items cart componentxx",response.data)
@@ -61,7 +62,7 @@ const AddressPage = () => {
     console.log(addressList)
   };
   const editAddress = async (address,adderssId) => {
-    const response = await axios.put(`http://localhost:4000/api/address/update/${adderssId}`,
+    const response = await axios.put(`${url}api/address/update/${adderssId}`,
         {...address}
     );
     console.log("address edit items cart componentyy",response.data)
@@ -70,7 +71,7 @@ const AddressPage = () => {
     // console.log(addresses)
   };
   const deleteAddress = async (adderssId) => {
-    const response = await axios.delete(`http://localhost:4000/api/address/delete/${adderssId}`
+    const response = await axios.delete(`${url}api/address/delete/${adderssId}`
     );
     console.log("address edit items cart componentyy",response.data)
     // dispatch(setCartItems(response.data.items));

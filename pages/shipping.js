@@ -125,7 +125,7 @@ const initiatePayment = async () => {
       setIsPaymentLoading(true);
 
       // Step 1: Create an order by calling the backend API
-      const { data } = await axios.post('http://localhost:4000/api/payment/order', {
+      const { data } = await axios.post(`${url}api/payment/order`, {
         amount: amount , // Amount in paisa (for Razorpay)
         currency: 'INR',
       });
@@ -155,7 +155,7 @@ const initiatePayment = async () => {
           };
 
           // Verify payment by calling the backend
-          const result = await axios.post('http://localhost:4000/api/payment/verify', paymentData);
+          const result = await axios.post(`${url}api/payment/verify`, paymentData);
           console.log("result",result.data)
           if (result.data.success) {
             if(createOrderData && paymentData){
@@ -170,19 +170,19 @@ const initiatePayment = async () => {
                 status:"completed"
               }
               
-              const order=await axios.post('http://localhost:4000/api/orders/create', {
+              const order=await axios.post(`${url}api/orders/create`, {
                 userId:userId,
                 address:deliveryAddress,
                 paymentResponse:paymentResponse
               })
               console.log("successful payment done",userId)
-              const removeCart=await axios.delete('http://localhost:4000/api/cart/clear',
+              const removeCart=await axios.delete(`${url}api/cart/clear`,
                 {data:{
                 userId
               }})
               // console.log("successful payment cleare cart done",removeCart)
 
-              const response = await axios.get(`http://localhost:4000/api/cart/${userId}`);
+              const response = await axios.get(`${url}api/cart/${userId}`);
               
               dispatch(setCartItems(response.data.items));
               setIsPaymentSuccess(true);
@@ -259,7 +259,7 @@ const initiatePayment = async () => {
     console.log("paymentResponse",paymentResponse)
     console.log("deliveryAddress",deliveryAddress)
    if(count==1){
-     const order=await axios.post('http://localhost:4000/api/orders/create', {
+     const order=await axios.post(`${url}api/orders/create`, {
        userId:userId,
         items:orderItems,
          address:deliveryAddress,

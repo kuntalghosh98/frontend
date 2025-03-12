@@ -1,11 +1,11 @@
 import React from 'react';
-
+import { url } from '@/constant';
 const MediaBanner = (props) => {
   let bannerUrl=props.imageUrl ? props.imageUrl : "" ;
   let text=props.text ? props.text : "";
   let callFrom=props.callFrom ? props.callFrom : "";
   if(bannerUrl==''){
-    bannerUrl=  'http://localhost:4000/uploads/video11.mp4';
+    bannerUrl=  `${url}uploads/video11.mp4`;
   }
  
 

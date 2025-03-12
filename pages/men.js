@@ -16,7 +16,7 @@ const Men = () => {
  
   const productData1 = [
     {
-      imageUrl: "http://localhost:4000/uploads/banner_ 1720212570132.jpg",
+      imageUrl: `${url}uploads/banner_ 1720212570132.jpg`,
       route: '/path/to/product1-route',
       name: 'Product 1',
       price: 29.99,

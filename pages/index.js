@@ -25,12 +25,16 @@ import AboutUs from '@/components/AboutUs';
 // import jwt_decode from 'jwt-decode';
 
 const HomePage = ({ banner, cards, highlightedProduct1, highlightedProduct2, newArrivalList, categoryBanner1, productScrollList }) => {
-
-
-
+// const fetch= async ()=>{
+//   const categoryBanner = await axios.get(`${url}api/banners/`)
+//   console.log(categoryBanner.data)
+//   return categoryBanner;
+// }
+// fetch()
+  
   // highlightedProducts1();
-  console.log("highlighted newArrivalList", newArrivalList)
-  console.log("-------productScrollList--------------", productScrollList);
+ 
+  console.log("-------productScrollList--------------", categoryBanner1);
   const dispatch = useDispatch();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
@@ -67,7 +71,7 @@ const HomePage = ({ banner, cards, highlightedProduct1, highlightedProduct2, new
 
   };
   const fetchAddress = async () => {
-    const response = await axios.get(`http://localhost:4000/api/address/${userId}`);
+    const response = await axios.get(`${url}api/address/${userId}`);
     console.log("cart items cart componentyy", response.data)
     dispatch(setAddresses(response.data));
     // setAddresses1(response.data)
@@ -171,7 +175,7 @@ const HomePage = ({ banner, cards, highlightedProduct1, highlightedProduct2, new
 
 export const getServerSideProps = async () => {
   try {
-
+    console.log("----------kuntal test----------------111---------------")
     const highlightedProducts = await axios.get(`${url}api/highlighted-products`);
     const highlightedProduct1 = highlightedProducts.data[0];
     const highlightedProduct2 = highlightedProducts.data[1];
@@ -179,18 +183,18 @@ export const getServerSideProps = async () => {
     const productScrollListObj = await axios.get(`${url}api/product-scroll-list`);
     const newArrivalList = newArrivals.data;
     const productScrollList = productScrollListObj.data;
-    const banner = `${url}uploads/banner_ 1720212570132.jpg`;
+    // const banner = `${url}uploads/banner_ 1720212570132.jpg`;
     const categoryBanner = await axios.get(`${url}api/banners/`)
     const categoryBanner1 = categoryBanner.data;
-    console.log(categoryBanner.data)
-    const cards = [
-      { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
-      { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
-      { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
-      { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
+    console.log("----------kuntal test-------------------------------")
+    // const cards = [
+    //   { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
+    //   { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
+    //   { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
+    //   { imageUrl: `${url}uploads/banner_ 1720212570132.jpg`, route: '/path_to_route_1' },
 
-      // Add more cards as needed
-    ];
+    //   // Add more cards as needed
+    // ];
 
 
 
@@ -198,8 +202,8 @@ export const getServerSideProps = async () => {
     return {
       props: {
 
-        banner,
-        cards,
+        // banner,
+        // cards,
         highlightedProduct1,
         highlightedProduct2,
         newArrivalList,
