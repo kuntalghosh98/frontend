@@ -153,6 +153,17 @@ let suggestedProductsList=[];
   if (loading || !product) {
     return <div>Loading...</div>;
   }
+  const fetchCart = async () => {
+    try {
+      const response = await axios.get(`${url}api/cart/${userId}`);
+      console.log("cart items", response.data.items)
+
+      dispatch(setCartItems(response.data.items));
+    } catch (e) {
+      console.log("cart is empty")
+    }
+
+  };
 
   const handleAddToBag = async () => {
     console.log("add to bag button", veriantId)
@@ -169,6 +180,7 @@ let suggestedProductsList=[];
         })
         console.log("Product added to cart", response.data.items)
         dispatch(setCartItems(response.data.items));
+        fetchCart();
         console.log("Product added to cart", response)
         setAddToCart(true);
       } catch (err) {
