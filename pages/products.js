@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ProductCard from '@/components/Product/ProductCard';
 import MediaBanner from '@/components/MediaBanner';
 import { fetchProducts } from '../store/slices/productSlice';
-import Filter from "./Filter";
+import Filter from "../components/Filter";
 
 
 
