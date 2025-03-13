@@ -7,7 +7,6 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons"; // Filled heart
 
 import NavLink from './Navlink'; // Import your custom NavLink component here
 import SearchBar from './SearchBar'; // Import SearchBar component
-import loginregister from '@/pages/loginregister';
 import { selectCartCount } from '../../store/slices/cartSlice';
 import Router from 'next/router';
 import { RouterContext } from 'next/dist/server/future/route-modules/app-page/vendored/contexts/entrypoints';
