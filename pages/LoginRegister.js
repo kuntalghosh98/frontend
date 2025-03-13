@@ -12,7 +12,7 @@ import image1 from "../Utility/icons/shoppana.svg";
 import image2 from "../Utility/icons/Onlinedating.gif";
 
 
-const loginregister = ({ onClose }) => {
+const LoginRegister = ({ onClose }) => {
    const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState('');
@@ -118,4 +118,4 @@ if(spinner) return <Spinner/>
   );
 };
 
-export default loginregister;
+export default LoginRegister;
