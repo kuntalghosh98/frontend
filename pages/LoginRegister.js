@@ -55,7 +55,7 @@ const LoginRegister = ({ onClose }) => {
       });
       console.log(response);
       
-      router.push(`/verifyotp?email=${email}`);
+      router.push(`/VerifyOtp?email=${email}`);
     }catch(err){
       console.log("mail not send",err)
     }

@@ -53,11 +53,11 @@ const NavBar1 = () => {
   };
   const handleLoginClick = () => {
     console.log("login");
-    router.push('/loginregister');
+    router.push('/LoginRegister');
   };
   const largeScreenLogin = () => {
     if (isLoggedIn) { router.push('./account') }
-    else { router.push('./loginregister') }
+    else { router.push('./LoginRegister') }
   }
 
 
