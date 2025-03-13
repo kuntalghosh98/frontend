@@ -82,11 +82,11 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
         {/* Left - Navigation Links */}
         <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-6 text-sm tracking-widest uppercase">
-          <Link href="/Products?category=women+jewellery+rings" className="hover:opacity-80">Rings</Link>
-          <Link href="/Products?category=women+jewellery+earrings" className="hover:opacity-80">Earrings</Link>
-          <Link href="/Products?category=women+jewellery+necklaces" className="hover:opacity-80">Necklaces</Link>
-          <Link href="/Products?category=women+jewellery+bracelets" className="hover:opacity-80">Bracelets</Link>
-          <Link href="/Products?category=women+jewellery+bangles" className="hover:opacity-80">Bangles</Link>
+          <Link href="/products?category=women+jewellery+rings" className="hover:opacity-80">Rings</Link>
+          <Link href="/products?category=women+jewellery+earrings" className="hover:opacity-80">Earrings</Link>
+          <Link href="/products?category=women+jewellery+necklaces" className="hover:opacity-80">Necklaces</Link>
+          <Link href="/products?category=women+jewellery+bracelets" className="hover:opacity-80">Bracelets</Link>
+          <Link href="/products?category=women+jewellery+bangles" className="hover:opacity-80">Bangles</Link>
         </div>
 
         {/* Right - Social Icons */}
@@ -118,7 +118,7 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center mt-6">
         <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs tracking-wide uppercase">
           <Link href="/" className="hover:opacity-80">Home</Link>
-          <Link href="/Products" className="hover:opacity-80">Shop</Link>
+          <Link href="/products" className="hover:opacity-80">Shop</Link>
         </div>
 
         <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs tracking-wide uppercase mt-4 md:mt-0">

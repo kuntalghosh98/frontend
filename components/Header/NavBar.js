@@ -125,11 +125,11 @@ const handleClick=()=>{
         <div className="text-transparent text-xl font-bold" onClick={handleClick}      >Classic Aura</div>
 
         <div className={`${isDefaultRoute ? textColor : "text-black"} hidden md:flex space-x-4 z-50`}>
-          <NavLink href="/Products?category=women+jewellery+rings" className="hover:opacity-80">Rings</NavLink>
-          <NavLink href="/Products?category=women+jewellery+earrings" className="hover:opacity-80">Earrings</NavLink>
-          <NavLink href="/Products?category=women+jewellery+necklaces" className="hover:opacity-80">Necklaces</NavLink>
-          <NavLink href="/Products?category=women+jewellery+bracelets" className="hover:opacity-80">Bracelets</NavLink>
-          <NavLink href="/Products?category=women+jewellery+bangles" className="hover:opacity-80">Bangles</NavLink>
+          <NavLink href="/products?category=women+jewellery+rings" className="hover:opacity-80">Rings</NavLink>
+          <NavLink href="/products?category=women+jewellery+earrings" className="hover:opacity-80">Earrings</NavLink>
+          <NavLink href="/products?category=women+jewellery+necklaces" className="hover:opacity-80">Necklaces</NavLink>
+          <NavLink href="/products?category=women+jewellery+bracelets" className="hover:opacity-80">Bracelets</NavLink>
+          <NavLink href="/products?category=women+jewellery+bangles" className="hover:opacity-80">Bangles</NavLink>
         </div>
 
         <div className="flex space-x-4 md:hidden">
@@ -211,11 +211,11 @@ const handleClick=()=>{
         style={{ width: '80%', maxWidth: '500px' }}
       >
         <div className="p-4 flex flex-col space-y-4 h-[85vh] z-10">
-        <NavLink href="/Products?category=women+jewellery+rings" className="hover:opacity-80">Rings</NavLink>
-          <NavLink href="/Products?category=women+jewellery+earrings" className="hover:opacity-80">Earrings</NavLink>
-          <NavLink href="/Products?category=women+jewellery+necklaces" className="hover:opacity-80">Necklaces</NavLink>
-          <NavLink href="/Products?category=women+jewellery+bracelets" className="hover:opacity-80">Bracelets</NavLink>
-          <NavLink href="/Products?category=women+jewellery+bangles" className="hover:opacity-80">Bangles</NavLink>
+        <NavLink href="/products?category=women+jewellery+rings" className="hover:opacity-80">Rings</NavLink>
+          <NavLink href="/products?category=women+jewellery+earrings" className="hover:opacity-80">Earrings</NavLink>
+          <NavLink href="/products?category=women+jewellery+necklaces" className="hover:opacity-80">Necklaces</NavLink>
+          <NavLink href="/products?category=women+jewellery+bracelets" className="hover:opacity-80">Bracelets</NavLink>
+          <NavLink href="/products?category=women+jewellery+bangles" className="hover:opacity-80">Bangles</NavLink>
 
 
         </div>

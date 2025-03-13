@@ -5,7 +5,7 @@ const HorizontalScrollCardItem = ({ imageUrl,insideimage, route }) => {
   const handleClick = () => {
     Router.push(
       {
-        pathname: "/Products",
+        pathname: "/products",
         query: { category: route },
       },
       undefined,
