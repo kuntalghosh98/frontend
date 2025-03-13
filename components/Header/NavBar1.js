@@ -53,11 +53,11 @@ const NavBar1 = () => {
   };
   const handleLoginClick = () => {
     console.log("login");
-    router.push('/LoginRegister');
+    router.push('/loginregister');
   };
   const largeScreenLogin = () => {
-    if (isLoggedIn) { router.push('./Account') }
-    else { router.push('./LoginRegister') }
+    if (isLoggedIn) { router.push('./account') }
+    else { router.push('./loginregister') }
   }
 
 
@@ -158,11 +158,6 @@ const handleClick=()=>{
       {isOpen && <div className="fixed inset-0 bg-white opacity-10 z-30" onClick={closeMenu}></div>}
       {isSearchOpen && <div className="fixed inset-0 bg-white opacity-10 z-30" onClick={closeSearch}></div>}
       {isSearchOpen && <SearchBar onClose={toggleSearch} />}
-      {/* {isLoginOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-          <LoginRegister onClose={closeLogin} />
-        </div>
-      )} */}
 
       <div
         className={`fixed top-16 right-0 h-[calc(100%-4rem)] bg-white shadow-lg transform ${isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -182,7 +177,7 @@ const handleClick=()=>{
           {isLoggedIn ? (
             <button
               className="flex items-center justify-center bg-black text-white rounded-full px-8 py-2"
-              onClick={() => router.push('/Account')}
+              onClick={() => router.push('/account')}
             >
               <FontAwesomeIcon icon={faUser} className="mr-2" />
               {user.name ? user.name : user.email}

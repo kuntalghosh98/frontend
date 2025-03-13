@@ -12,7 +12,7 @@ import image1 from "../Utility/icons/shoppana.svg";
 import image2 from "../Utility/icons/Onlinedating.gif";
 
 
-const LoginRegister = ({ onClose }) => {
+const loginregister = ({ onClose }) => {
    const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState('');
@@ -55,11 +55,11 @@ const LoginRegister = ({ onClose }) => {
       });
       console.log(response);
       
-      router.push(`/VerifyOtp?email=${email}`);
+      router.push(`/verifyotp?email=${email}`);
     }catch(err){
       console.log("mail not send",err)
     }
-    // Redirect to the VerifyOtp component with the email as a query parameter
+    // Redirect to the verifyotp component with the email as a query parameter
    
   };
 if(spinner) return <Spinner/>
@@ -118,4 +118,4 @@ if(spinner) return <Spinner/>
   );
 };
 
-export default LoginRegister;
+export default loginregister;

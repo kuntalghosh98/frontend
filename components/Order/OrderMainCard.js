@@ -40,7 +40,7 @@ const OrderMainCard=({items})=> {
     }
     console.log("imageUrlXXXXX",imageUrl)
     const OrderClick=()=>{
-        router.push(`./OrderDetailPage?id=${items._id}`)
+        router.push(`./orderdetailpage?id=${items._id}`)
       }
 
   return (

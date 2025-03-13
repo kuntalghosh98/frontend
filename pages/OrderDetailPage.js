@@ -5,7 +5,7 @@ import OrderdItem from '../components/Order/OrderdItem';
 import AddressCard from '@/components/Address/AddressCard';
 import axios from 'axios';
 import { url } from '@/constant';
-const OrderDetailPage=()=> {
+const orderdetailpage=()=> {
     const router = useRouter();
    const [orderdItem,setOrderdItem]=useState([])
    const [deliveryAddress,setDeliveryAddress]=useState({})
@@ -44,4 +44,4 @@ const OrderDetailPage=()=> {
   )
 }
 
-export default OrderDetailPage
+export default orderdetailpage

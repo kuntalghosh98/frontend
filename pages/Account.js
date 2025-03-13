@@ -5,14 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons'; // Import the bars icon
 import Sidebar from '../components/slidebar/Sidebar';
 import OrdersPage from './OrdersPage';
-import CustomerCarePage from './CustomerCarePage';
 import PaymentsPage from './PaymentsPage';
 import PersonalInfoPage from './PersonalInfoPage';
 import AddressPage from './address';
 import ContactUs from '@/components/ContactUs';
 import AboutUs from '@/components/AboutUs';
 
-const Account = () => {
+const account = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('address');
 
@@ -75,4 +74,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default account;

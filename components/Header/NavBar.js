@@ -7,7 +7,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons"; // Filled heart
 
 import NavLink from './Navlink'; // Import your custom NavLink component here
 import SearchBar from './SearchBar'; // Import SearchBar component
-import LoginRegister from '@/pages/LoginRegister';
+import loginregister from '@/pages/loginregister';
 import { selectCartCount } from '../../store/slices/cartSlice';
 import Router from 'next/router';
 import { RouterContext } from 'next/dist/server/future/route-modules/app-page/vendored/contexts/entrypoints';
@@ -55,11 +55,11 @@ const NavBar = () => {
   };
   const handleLoginClick = () => {
     console.log("login");
-    router.push('/LoginRegister');
+    router.push('/loginregister');
   };
   const largeScreenLogin = () => {
-    if (isLoggedIn) { router.push('./Account') }
-    else { router.push('./LoginRegister') }
+    if (isLoggedIn) { router.push('./account') }
+    else { router.push('./loginregister') }
   }
   const closeLogin = () => {
     setIsLoginOpen(false);
@@ -201,7 +201,7 @@ const handleClick=()=>{
       {isSearchOpen && <SearchBar onClose={toggleSearch} />}
       {/* {isLoginOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-          <LoginRegister onClose={closeLogin} />
+          <loginregister onClose={closeLogin} />
         </div>
       )} */}
 
@@ -223,7 +223,7 @@ const handleClick=()=>{
           {isLoggedIn ? (
             <button
               className="flex items-center justify-center bg-black text-white rounded-full px-8 py-2"
-              onClick={() => router.push('/Account')}
+              onClick={() => router.push('/account')}
             >
               <FontAwesomeIcon icon={faUser} className="mr-2" />
               {user.name ? user.name : user.email}

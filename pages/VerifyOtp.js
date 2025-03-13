@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { url } from '@/constant';
 import Spinner from '@/components/Spinner';
-const VerifyOtp = () => {
+const verifyotp = () => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState(null);
   const [spinner,setSpinner]=useState(false);
@@ -22,7 +22,7 @@ const VerifyOtp = () => {
 
       // Assuming the response contains the token
       const { token } = response.data;
-      console.log("VerifyOtp",response)
+      console.log("verifyotp",response)
       // Save the token to local storage
       localStorage.setItem('token', token);
 
@@ -65,4 +65,4 @@ const VerifyOtp = () => {
   );
 };
 
-export default VerifyOtp;
+export default verifyotp;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function CustomerCarePage() {
+export default function customercarepage() {
   return (
     <div>
       
