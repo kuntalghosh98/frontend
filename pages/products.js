@@ -10,7 +10,7 @@ import Filter from "../components/Filter";
 
 
 
-const products =()=> {
+function products () {
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState("");
   const router = useRouter();
