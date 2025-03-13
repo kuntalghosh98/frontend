@@ -10,7 +10,7 @@ import Filter from "../components/Filter";
 
 
 
-function products () {
+function Products () {
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState("");
   const router = useRouter();
@@ -91,4 +91,4 @@ let catagoryName1=catagoryName.toString().toUpperCase()
   );
 };
 
-export default products;
+export default Products;

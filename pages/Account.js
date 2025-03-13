@@ -11,7 +11,7 @@ import AddressPage from './address';
 import ContactUs from '@/components/ContactUs';
 import AboutUs from '@/components/AboutUs';
 
-const account = () => {
+const Account = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('address');
 
@@ -74,4 +74,4 @@ const account = () => {
   );
 };
 
-export default account;
+export default Account;

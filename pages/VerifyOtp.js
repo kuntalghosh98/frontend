@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { url } from '@/constant';
 import Spinner from '@/components/Spinner';
-const verifyotp = () => {
+const VerifyOtp = () => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState(null);
   const [spinner,setSpinner]=useState(false);
@@ -65,4 +65,4 @@ const verifyotp = () => {
   );
 };
 
-export default verifyotp;
+export default VerifyOtp;
