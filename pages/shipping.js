@@ -37,8 +37,9 @@ const ShippingPage = () => {
   let deliveryAddress
   console.log("add shipping",selectAddress)
   let userId="";
+  const user = useSelector((state) => state.user.user);
   if(isLoggedIn){
-    const user = useSelector((state) => state.user.user);
+    
    userId =user._id;
   }
   

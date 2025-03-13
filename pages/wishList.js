@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { url } from '@/constant';
 import { fetchUserData } from '../commonFun/commonFunction';
 import ProductCard from '@/components/Product/ProductCard';
-function wishList() {
+function WishList() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const user = useSelector((state) => state.user.user);
@@ -88,4 +88,4 @@ function wishList() {
   );
 };
 
-export default wishList;
+export default WishList;

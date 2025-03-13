@@ -11,10 +11,11 @@ const VerifyOtp = () => {
   const { email } = router.query;
   console.log(email);
   const handleOtpSubmit = async (event) => {
+    console.log("------------------otp--------------------",otp)
     event.preventDefault();
     try {
       setSpinner(true);
-      const response = await axios.post(`${url}api/users/verify-email-otp`, {
+      const response = await axios.post(`${url}api/users/otp/verify-email-otp`, {
         email,
         otp,
       });
