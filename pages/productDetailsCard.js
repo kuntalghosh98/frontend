@@ -15,6 +15,7 @@ import { useSwipeable } from 'react-swipeable';
 import ProductScrollBanner from '@/components/ProductScrollBanner/ProductScrollBanner';
 import ProductScrollList from '@/components/ProductScrollBanner/ProductScrollList';
 import { setCartItems } from '../store/slices/cartSlice';
+import { fetchProducts } from '../store/slices/productSlice';
 import { url,urlImg } from '@/constant';
 import SuccessPopup from "../components/SuccessPopup";
 import image1 from "../Utility/icons/returnIcon.png";
@@ -35,7 +36,7 @@ import image6 from "../Utility/icons/gold.png";
 import image7 from "../Utility/icons/skin.png";
 import ShareButton from "./ShareButton";
 const playfair = Playfair_Display({ subsets: ["latin"], weight: "400" });
-const poppins = Poppins({ subsets: ["latin"], weight: "600" });
+
 
 
 const ProductDetailsCard = () => {
@@ -49,14 +50,14 @@ const ProductDetailsCard = () => {
   const [loading, setLoading] = useState(true);
   const [color, setColor] = useState('');
   const [size, setSize] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+ 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const [veriantId, setveriantId] = useState("");
   const [showMessage, setShowMessage] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const productsYY = useSelector((state) => state.products.items);
+  const allProducts = useSelector((state) => state.products.items);
   const recentlyViewed = useSelector((state) => state.recentlyViewed);
   const wishlist = useSelector((state) => state.wishlist.items);
   const isWishlisted = wishlist.some((item) => item.productId._id === id);
@@ -69,23 +70,21 @@ const ProductDetailsCard = () => {
 console.log("isWishlisted",isWishlisted)
 
 
+useEffect(() => {
+  if(allProducts.length<1){
+    dispatch(fetchProducts()); 
+  }
 
+}, [dispatch])
 let suggestedProductsList=[];
-  const recentlyViewedProducts = productsYY.filter(
+  const recentlyViewedProducts = allProducts.filter(
     (product) => recentlyViewed.includes(product._id) && product._id !== id
   );
   console.log("Recently Viewed Products:", recentlyViewedProducts);
 
   console.log("recent viewed product",recentlyViewed);
-  console.log(productsYY)
-  const productxx1 = (productsYY) => {
-
-  }
-
-  const status = useSelector((state) => state.products.status);
-  const productXX = useSelector((state) => selectAllProducts(state));
-  // const productData = useSelector((state) => selectProductById(state, id));
-  // console.log("prd details1", productData)
+  console.log(allProducts)
+  
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -93,42 +92,34 @@ let suggestedProductsList=[];
 
   const [disable, setDisable] = useState(false);
   console.log("veriantId", veriantId)
-  useEffect(() => {
-    const fetchProductDetails = async () => {
-      try {
-        const response = await axios.get(`${url}api/products/${id}`);
-        const productData = response.data;
-        console.log("productData---------------------------------",productData);
-        setProduct(productData);
-        if (productData.variants.length > 0) {
-          const defaultVariant = productData.variants[0];
-          setColor(defaultVariant.color);
-          setveriantId(defaultVariant._id)
-          // setSize(defaultVariant.sizeStock[0].size)
-          sizeAvailablityset(defaultVariant)
+  // useEffect(() => {
+  //   const fetchProductDetails = async () => {
+  //     try {
+  //       const response = await axios.get(`${url}api/products/${id}`);
+  //       const productData = response.data;
+  //       console.log("productData---------------------------------",productData);
+  //       setProduct(productData);
+  //       if (productData.variants.length > 0) {
+  //         const defaultVariant = productData.variants[0];
+  //         setColor(defaultVariant.color);
+  //         setveriantId(defaultVariant._id)
+  //         sizeAvailablityset(defaultVariant)
+  //       }
+  //       setLoading(false);
 
-          // if (defaultVariant.sizeStock.length > 0) {
-          //   setSize(defaultVariant.sizeStock[0].size);
-          // }
-        }
 
-        setLoading(false);
-
-        // Fetch product suggestions (you might want to filter or limit the results)
-        const suggestionsResponse = await axios.get(`${url}api/products/suggestions`);
-        setSuggestions(suggestionsResponse.data);
 
         
-      } catch (error) {
-        console.error('Error fetching product details:', error);
-        setLoading(false);
-      }
-    };
+  //     } catch (error) {
+  //       console.error('Error fetching product details:', error);
+  //       setLoading(false);
+  //     }
+  //   };
 
-    if (id) {
-      fetchProductDetails();
-    }
-  }, [id]);
+  //   if (id) {
+  //     fetchProductDetails();
+  //   }
+  // }, [id]);
 
   const sizeAvailablityset = (Variant) => {
     console.log("size availablity set", Variant)
@@ -148,11 +139,33 @@ let suggestedProductsList=[];
     }
   }
   useEffect(() => {
-  }, [id])
+    if (id && allProducts.length > 0) {
+      console.log("-----------------------------2-------------------------------");
+      const foundProduct = allProducts.find(product => product._id === id);
+      console.log(foundProduct);
+      console.log("-----------------------------3-------------------------------");
+  
+      if (foundProduct) {
+        setProduct(foundProduct);
+        console.log("-----------------------------4-------------------------------");
+        const defaultVariant = foundProduct.variants[0];
+        setColor(defaultVariant.color);
+        setveriantId(defaultVariant._id);
+        sizeAvailablityset(defaultVariant);
+        
+      }
+    }
+    setLoading(false)
+  }, [id, allProducts]);
+  
 
   if (loading || !product) {
-    return <div>Loading...</div>;
-  }
+      return (
+        <div className="w-full h-screen flex items-center justify-center">
+          <p className="text-xl">Loading...</p>
+        </div>
+      );
+    }
   const fetchCart = async () => {
     try {
       const response = await axios.get(`${url}api/cart/${userId}`);
@@ -218,15 +231,7 @@ let suggestedProductsList=[];
 const handleHeartIconClick=()=>{
   handleAddToWishlist();
 }
-  const handleColorChange = (e) => {
-    setColor(e.target.value);
-    const selectedVariant = product.variants.find(variant => variant.color === e.target.value);
-    if (selectedVariant && selectedVariant.sizeStock.length > 0) {
-      setSize(selectedVariant.sizeStock[0].size); // Set default size to the first available size
-    }
-  };
 
-  const selectedVariant = product.variants.find(variant => variant.color === color);
 
 
   const handleTouchStart = (e) => {
@@ -249,7 +254,7 @@ const handleHeartIconClick=()=>{
   if(product){
     console.log("product category suggestedProducts",suggestedProductsList);
     const categoryBase = product.category.split(" ").slice(0, 2).join(" ");
-    const suggestedProducts = productsYY
+    const suggestedProducts = allProducts
     .filter(
       (productRedux) =>
         productRedux.category.startsWith(categoryBase) && productRedux._id !== product._id // Match category & exclude current product

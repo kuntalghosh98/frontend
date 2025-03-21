@@ -57,7 +57,7 @@ const NavBar = () => {
     router.push('/LoginRegister');
   };
   const largeScreenLogin = () => {
-    if (isLoggedIn) { router.push('./account') }
+    if (isLoggedIn) { router.push('./Account') }
     else { router.push('./LoginRegister') }
   }
   const closeLogin = () => {
@@ -222,7 +222,7 @@ const handleClick=()=>{
           {isLoggedIn ? (
             <button
               className="flex items-center justify-center bg-black text-white rounded-full px-8 py-2"
-              onClick={() => router.push('/account')}
+              onClick={() => router.push('/Account')}
             >
               <FontAwesomeIcon icon={faUser} className="mr-2" />
               {user.name ? user.name : user.email}

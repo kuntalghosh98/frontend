@@ -31,7 +31,7 @@ import { useRouter } from 'next/router';
 
 const AddressCard = ({ address, onEdit, onDelete,handleSelect }) => {
     const router = useRouter();
-    const isroute= router.pathname === '/account';
+    const isroute= router.pathname === '/Account';
     const isrouteToSelect=router.pathname==='/address'
   return (
     <div className="border p-4 rounded shadow-lg">
