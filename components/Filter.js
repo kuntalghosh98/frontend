@@ -175,7 +175,7 @@
 
 import React, { useState } from "react";
 
-const Filter = ({ products, onFilter }) => {
+const Filter = ({ products, onFilter,tshirtProducts }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -185,13 +185,27 @@ const Filter = ({ products, onFilter }) => {
   const [sortOrder, setSortOrder] = useState("");
   const [price, setPrice] = useState(10000); // Default max price
   const [tempFilters, setTempFilters] = useState({}); // Store temp filters before applying
-
+console.log("inside filter component",products)
   // Extract unique filters
   const genders = [...new Set(products.map((p) => p.category.split(" ")[0]))];
   const types = [...new Set(products.map((p) => p.category.split(" ")[1]))];
   const categories = [...new Set(products.map((p) => p.category.split(" ")[2]))];
-  const colors = [...new Set(products.flatMap((p) => p.variants.map((v) => v.color)))];
-  const sizes = [...new Set(products.flatMap((p) => p.variants.flatMap((v) => v.sizeStock.map((s) => s.size))))];
+  const colors = [...new Set(
+    products.flatMap((p) => 
+      p.variants
+        .map((v) => v.color)
+        .filter((color) => color && color.trim() !== "")
+    )
+  )];
+  
+  const sizes = [...new Set(
+    products.flatMap((p) =>
+      p.variants.flatMap((v) =>
+        v.sizeStock.map((s) => s.size).filter((size) => size && size.trim() !== "")
+      )
+    )
+  )];
+  
   const minPrice = Math.min(...products.map((p) => p.price));
   const maxPrice = Math.max(...products.map((p) => p.price));
 
@@ -255,7 +269,7 @@ const Filter = ({ products, onFilter }) => {
           <h2 className="text-lg font-bold">Filters</h2>
 
           {/* Gender */}
-          <div className="mt-4">
+          {genders.length > 1 ? (<div className="mt-4">
             <h4 className="font-semibold">Gender</h4>
             <select onChange={(e) => handleTempFilterChange("gender", e.target.value)} className="border p-2 rounded w-full">
               <option value="">All</option>
@@ -264,7 +278,10 @@ const Filter = ({ products, onFilter }) => {
               ))}
             </select>
           </div>
+          ) : ""
 
+          }
+        
           {/* Type */}
           <div className="mt-4">
             <h4 className="font-semibold">Type</h4>
