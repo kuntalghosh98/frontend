@@ -12,13 +12,15 @@ import NavBar from '@/components/Header/NavBar';
 import Footer from '@/components/Footer';
 import NavBar1 from '@/components/Header/NavBar1';
 import LoadingScreen from '@/components/LoadingScreen';
-
+import UserInitializer from '@/components/UserInitializer';
 
 
 function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
+       {/* Initialize user data once */}
+       <UserInitializer />
       {/* Page Wrapper to Keep Footer at the Bottom */}
       <div className="flex flex-col min-h-screen">
         {/* Header */}

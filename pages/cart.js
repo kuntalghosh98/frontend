@@ -20,44 +20,13 @@ const Cart = () => {
   const isDataAvailable = useSelector((state) => state.user.isDataAvailable);
   const router = useRouter();
  
-  // useEffect(()=>{
-  //   if(!isDataAvailable){
-  //     console.log("if isDataAvailable")
-  //     router.push('/')
-  //   }
-  // },[])
-  console.log("isDataAvailable",isDataAvailable)
-   // Replace with actual user ID logic
 
+  console.log("isDataAvailable",isDataAvailable)
   const user = useSelector((state) => state.user.user);
   
 
   
-  useEffect(() => {
-    if(isLoggedIn){
-    const userId =user._id;
-
-   
-    fetchCart(userId);
-  }else{
-    // console.log()
-    fetchUserData(url)
-  .then((data) => {
-    console.log("data----1111",data); //Use the resolved value
-
-    if (data) {
-      fetchCart(data._id);
-      dispatch(setUser(data));
-    }    
-  })
-  .catch((error) => {
-    console.error("Error fetching user data:", error); //Handle any errors
-  })
-    
-    // fetchCart(userId);
-  }
-  }, [ ]);
-
+ 
   const fetchCart = async (userId) => {
     const response = await axios.get(`${url}api/cart/${userId}`);
     console.log("cart items cart component",response.data.items)

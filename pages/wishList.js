@@ -18,24 +18,24 @@ function WishList() {
   const userId = user ? user._id : null;
   const wishlistProducts = useSelector((state) => state.wishlist.items); // Get wishlist from Redux
   console.log(wishlistProducts)
-  useEffect(() => {
-    if (true) {
-      console.log("inside list")
-      if (isLoggedIn && user?._id) {
-        fetchWishList();
-      } else {
-        fetchUserData(url)
-          .then((data) => {
-            if (data) {
-              fetchWishList();
-              dispatch(setUser(data));
-            }
-          })
-          .catch((error) => console.error("Error fetching user data:", error));
-      }
-    }
+  // useEffect(() => {
+  //   if (true) {
+  //     console.log("inside list")
+  //     if (isLoggedIn && user?._id) {
+  //       fetchWishList();
+  //     } else {
+  //       fetchUserData(url)
+  //         .then((data) => {
+  //           if (data) {
+  //             fetchWishList();
+  //             dispatch(setUser(data));
+  //           }
+  //         })
+  //         .catch((error) => console.error("Error fetching user data:", error));
+  //     }
+  //   }
 
-  }, [isLoggedIn, user]); // Run when isLoggedIn or user changes
+  // }, [isLoggedIn, user]); // Run when isLoggedIn or user changes
 
   const fetchWishList = async () => {
     try {

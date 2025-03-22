@@ -18,65 +18,53 @@ const AddressPage = () => {
   const isDataAvailable = useSelector((state) => state.user.isDataAvailable);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const user = useSelector((state) => state.user.user);
-  const [addresses, setAddresses1] = useState([]);
   const dispatch = useDispatch();
   console.log("from address page---",isDataAvailable)
-  console.log(isDataAvailable)
+  console.log("user",user)
+
+  let userId = user ? user._id : null;
   
-  useEffect(() => {
-    if (!isDataAvailable) {
-      router.push('/');
-    }
-  }, [isDataAvailable, router]);
-  let userId ="";
   
-  useEffect(() => {
-    if (isLoggedIn && user) {
-      fetchAddress();
-    }
-  }, [isLoggedIn, user]);
     
   
   console.log("user id at address component",userId)
 
   
-
-  const fetchAddress = async () => {
-    const response = await axios.get(`${url}api/address/${user._id}`);
-    console.log("cart items cart componentyy",response.data)
-    dispatch(setAddresses(response.data));
-    setAddresses1(response.data)
-    console.log(addresses)
-  };
+  const addresses = useSelector((state) => state.address.addresses);
+  // console.log("allAddress",allAddress)
+  // const fetchAddress = async () => {
+  //   const response = await axios.get(`${url}api/address/${user._id}`);
+  //   console.log("cart items cart componentyy",response.data)
+  //   dispatch(setAddresses(response.data));
+  //   setAddresses1(response.data)
+  //   console.log(addresses)
+  // };
  
  
   const addAddress = async (address) => {
-    const response = await axios.post(`${url}api/address/add/`,
+    const response = await axios.post(`${url}api/address/add`,
      {...address}
     );
     console.log("cart items cart componentxx",response.data)
     let addressList=[response.data.address,...addresses]
     
-    setAddresses1(addressList)
-    
+
+    const addressRes = await axios.get(`${url}api/address/${userId}`);
+    dispatch(setAddresses(addressRes.data));
     console.log(addressList)
   };
   const editAddress = async (address,adderssId) => {
     const response = await axios.put(`${url}api/address/update/${adderssId}`,
         {...address}
     );
+    const addressRes = await axios.get(`${url}api/address/${userId}`);
+    dispatch(setAddresses(addressRes.data));
     console.log("address edit items cart componentyy",response.data)
-    // dispatch(setCartItems(response.data.items));
-    // setAddresses(response.data)
-    // console.log(addresses)
   };
   const deleteAddress = async (adderssId) => {
     const response = await axios.delete(`${url}api/address/delete/${adderssId}`
     );
     console.log("address edit items cart componentyy",response.data)
-    // dispatch(setCartItems(response.data.items));
-    // setAddresses(response.data)
-    // console.log(addresses)
   };
 
 
@@ -93,7 +81,7 @@ const AddressPage = () => {
   };
 
   const handleEdit = (address) => {
-    console.log("address")
+    console.log("address   handle edit------")
     
     setSelectedAddress(address);
     console.log(address)
@@ -121,20 +109,10 @@ const AddressPage = () => {
         console.log("edit address",newAddress)
         console.log("edit address",selectedAddress._id) 
         editAddress(newAddress,selectedAddress._id) 
-      // Update address logic
-    //   setAddresses(addresses.map(addr => addr.userId === newAddress.userId ? newAddress : addr))
     } else {
-        if(addressId){
-            console.log("edit address",newAddress)
-            // console.log("edit address",newAddress._id)
-        }else{
-
             console.log("new address",newAddress)
             addAddress(newAddress)
-        }
-        
-      // Add new address
-    //   setAddresses([...addresses, newAddress]);
+  
     }
     setIsModalOpen(false);
   };
