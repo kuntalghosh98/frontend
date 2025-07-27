@@ -7,15 +7,16 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 
-import '../components/fontawesome';
+
 import NavBar from '@/components/Header/NavBar';
 import Footer from '@/components/Footer';
-import NavBar1 from '@/components/Header/NavBar1';
-import LoadingScreen from '@/components/LoadingScreen';
+import NavCopy from '@/components/Header/NavCopy';
 import UserInitializer from '@/components/UserInitializer';
 
 
 function MyApp({ Component, pageProps }) {
+
+
 
   return (
     <Provider store={store}>
@@ -25,7 +26,8 @@ function MyApp({ Component, pageProps }) {
       <div className="flex flex-col min-h-screen">
         {/* Header */}
         <NavBar />
-{/* <NavBar1/> */}
+        {/* <NavCopy/> */}
+
         {/* Main Content - Pushes footer down when content is short */}
         <main className="flex-grow">
           <Component {...pageProps} />

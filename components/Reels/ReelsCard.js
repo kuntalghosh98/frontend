@@ -22,11 +22,6 @@ const Reelscard = ({ reel }) => {
         playsInline
         className="w-full h-100 object-cover"
       />
-      {/* <img src={product.imageUrl} alt={product.name} className="w-full h-60 object-cover" /> */}
-      {/* <div className="p-4">
-        <h3 className="text-lg font-bold">{product.name}</h3>
-        <p className="text-sm text-gray-600">${product.price}</p>
-      </div> */}
     </div>
   );
 };
