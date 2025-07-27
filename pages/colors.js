@@ -1,6 +1,11 @@
 // colors.js
+import React from 'react';
 
-const luxuryColors = {
+export default function ColorsPage() {
+  return <div>This is the Colors page</div>;
+}
+
+export const luxuryColors = {
     // 🌿 Base Colors
     sand: '#d7c9bb',       // Base background (used in footer and light section backgrounds)
     pearlWhite: '#f9f7f3', // Light background for main content areas, product sections
@@ -20,5 +25,5 @@ const luxuryColors = {
     darkGrey: '#5f5f5f',     // Secondary text, muted labels
   };
   
-  export default luxuryColors;
+ 
   
