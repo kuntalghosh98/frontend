@@ -155,16 +155,19 @@ const CartSummary = () => {
         </div>
       ) : (
   <div className="bg-white rounded-md p-4 border mb-4 text-sm">
+     
      {items.map((item, index) => {
-const discountedPrice = calculateDiscountedPrice(item);
-      return(
-    <div className="flex justify-between">
+  const discountedPrice = calculateDiscountedPrice(item);
+  return (
+    <div className="flex justify-between" key={item._id || index}>
       <span className="text-gray-700">{item.productId.name}</span>
-      <span className="text-black font-medium"> <strong>₹ {discountedPrice * item.quantity}</strong></span>
+      <span className="text-black font-medium">
+        <strong>₹ {discountedPrice * item.quantity}</strong>
+      </span>
     </div>
-      )
-     }
-    )}
+  );
+})}
+
   </div>
       )}
   {/* Breakdown */}
