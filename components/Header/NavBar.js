@@ -363,7 +363,7 @@ const NavBar = () => {
   }, [isOpen, isDefaultRoute]);
 
   return (
-    <nav className={`${isDefaultRoute && !scrolled && !isOpen ? 'bg-transparent' : 'bg-white'} p-4  fixed w-full top-0 left-0 z-50 transition-colors duration-300`} style={{ height: '4rem' }}>
+    <nav className={`${isDefaultRoute && !scrolled && !isOpen ? 'bg-transparent' : 'bg-white shadow-sm'} p-4  fixed w-full top-0 left-0 z-50 transition-colors duration-300`} style={{ height: '4rem' }}>
       <div className="container mx-auto flex justify-between items-center align-items-center">
         {/* Brand */}
 

@@ -650,7 +650,7 @@ import { url, urlImg } from '@/constant';
 import ProductScrollBanner from '@/components/ProductScrollBanner/ProductScrollBanner';
 import SuccessPopup from '@/components/SuccessPopup';
 import ShareButton from './ShareButton';
-
+import Spinner from "@/components/Spinner";
 
 import image1 from '../Utility/icons/returnIcon.png';
 import image2 from '../Utility/icons/codIcon.png';
@@ -689,7 +689,7 @@ const ProductDetailsCard = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const [spinner, setSpinner] = useState(false);
   const isWishlisted = wishlist.some((item) => item.productId._id === id);
 
   useEffect(() => {
@@ -719,6 +719,7 @@ const ProductDetailsCard = () => {
   const handleAddToCart = async () => {
     if (!isLoggedIn) return triggerLoginPrompt();
     try {
+      setSpinner(true);
       const response = await addToCartApi({ userId, productId: id, size, veriantColor: color });
      const res=await fetchCartApi(userId);
       console.log("Product added to cart", res);
@@ -726,6 +727,8 @@ const ProductDetailsCard = () => {
       setAddToCartPopup(true);
     } catch (err) {
       console.error('Error adding to cart:', err);
+    }finally{
+      setSpinner(false);
     }
   };
 

@@ -11,6 +11,7 @@ import PaymentSuccessModal from '../components/PaymentSuccessModal';
 import { setCartItems } from '@/store/slices/cartSlice';
 import { fetchCartApi, clearCartApi } from '@/api/cartApi';
 import { createOrderApi,createRazorpayOrderApi, verifyRazorpayPaymentApi } from '@/api/orderApi';
+import Spinner from "@/components/Spinner";
 // import { createRazorpayOrderAPI, verifyRazorpayPaymentAPI } from '@/api/paymentApi';
 
 const ShippingPage = () => {
@@ -21,7 +22,7 @@ const ShippingPage = () => {
   const isDataAvailable = useSelector((state) => state.user.isDataAvailable);
   const user = useSelector((state) => state.user.user);
   const userId = user?._id;
-
+  const [spinner, setSpinner] = useState(false);
   const selectAddress = useSelector((state) => state.address.selectedAddress);
   const addresses = useSelector((state) => state.address.addresses);
   const cartItems = useSelector((state) => state.cart.items);
@@ -69,6 +70,7 @@ const ShippingPage = () => {
 
   const handlePaymentSuccess = async (paymentData, orderDetails) => {
     try {
+      setSpinner(true);
       await createOrderApi({
         userId,
         items: orderDetails.items,
@@ -83,6 +85,8 @@ const ShippingPage = () => {
       setIsPaymentSuccess(true);
     } catch (error) {
       console.error('Error in success handler:', error);
+    }finally{
+      setSpinner(false);
     }
   };
 
@@ -281,7 +285,7 @@ const ShippingPage = () => {
   const pushToAddress = () => {
     router.push({ pathname: '/address', query: { from: 'shipping' } });
   };
-
+if (spinner) return <Spinner />;
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">Shipping Information</h1>
