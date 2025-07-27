@@ -759,7 +759,7 @@ const ProductDetailsCard = () => {
   );
 
   if (loading || !product) return <div className="text-center py-20">Loading...</div>;
-
+  if (spinner) return <Spinner />;
   return (
     <div className="w-full mx-auto flex flex-col pt-16">
       {/* Product Image and Info Section */}
