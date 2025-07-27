@@ -761,7 +761,7 @@ const ProductDetailsCard = () => {
     <div className="w-full mx-auto flex flex-col pt-16">
       {/* Product Image and Info Section */}
       {/* Keep previously optimized subcomponents or re-integrate here */}
-      <div className="w-full bg-white rounded-md shadow-md  flex flex-col md:flex-row pt-16 ">
+      <div className="w-full bg-white rounded-md shadow-md  flex flex-col md:flex-row ">
       <div className="relative md:w-1/2">
         <img
           src={`${urlImg}${images[currentImageIndex]}`}
