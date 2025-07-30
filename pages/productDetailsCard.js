@@ -767,7 +767,7 @@ const ProductDetailsCard = () => {
       <div className="w-full bg-white rounded-md shadow-md  flex flex-col md:flex-row ">
       <div className="relative md:w-1/2">
         <img
-          src={`${urlImg}${images[currentImageIndex]}`}
+          src={`${images[currentImageIndex]}`}
           alt={product.name}
           onClick={() => setIsGalleryOpen(true)}
           className="w-full h-[70vh] object-cover"
@@ -978,7 +978,7 @@ const ProductDetailsCard = () => {
         <Lightbox
           open={isGalleryOpen}
           close={() => setIsGalleryOpen(false)}
-          slides={images.map((src) => ({ src: `${urlImg}${src}` }))}
+          slides={images.map((src) => ({ src: `${src}` }))}
           plugins={[Thumbnails, Zoom]}
         />
               

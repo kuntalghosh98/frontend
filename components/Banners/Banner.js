@@ -40,7 +40,7 @@ const Banner = ({ cardData, productData = [] }) => {
   return (
     <div className="flex flex-col lg:flex-row w-full">
       <div className="w-full lg:w-1/2 flex justify-center bg-white p-4">
-        <BannerCard imageUrl={`${url}uploads/${cardData.image}`} route={cardData.route} />
+        <BannerCard imageUrl={`${cardData.image}`} route={cardData.route} />
       </div>
 
       <div className="w-full lg:w-1/2 flex justify-center items-center bg-white">

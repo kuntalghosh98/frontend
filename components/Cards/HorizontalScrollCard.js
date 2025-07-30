@@ -47,7 +47,7 @@ const HorizontalScrollCard = ({ cards = [] }) => {
         {cards.map((card, index) => (
           <HorizontalScrollCardItem
             key={index}
-            imageUrl={`${url}uploads/${card.image}`}
+            imageUrl={`${card.image}`}
             insideimage={`${url}uploads/${card.insideimage}`}
             route={card.categoryName}
           />

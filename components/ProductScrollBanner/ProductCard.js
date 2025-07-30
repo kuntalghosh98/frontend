@@ -73,8 +73,8 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   const variant = product.variants?.[0] || {};
-  const image1 = `${urlImg}${variant.imageUrls?.[0] || ""}`;
-  const image2 = `${urlImg}${variant.imageUrls?.[1] || variant.imageUrls?.[0] || ""}`;
+  const image1 = `${variant.imageUrls?.[0] || ""}`;
+  const image2 = `${variant.imageUrls?.[1] || variant.imageUrls?.[0] || ""}`;
   const [currentImage, setCurrentImage] = useState(image1);
 
   const handleClick = () => {

@@ -96,7 +96,7 @@ const BannerProducts = ({ products = [] }) => {
         >
           <div className="w-full flex flex-col h-full">
             <img
-              src={`${urlImg}${product.variants?.[0]?.imageUrls?.[0]}`}
+              src={`${product.variants?.[0]?.imageUrls?.[0]}`}
               alt={product.name || 'Product'}
               className="w-full h-[200px] object-cover"
             />

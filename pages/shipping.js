@@ -31,6 +31,15 @@ const ShippingPage = () => {
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
 
   const deliveryDate = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString();
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
 
   useEffect(() => {
     if (!isDataAvailable) router.push('/');
@@ -196,6 +205,12 @@ const ShippingPage = () => {
     }
   
     try {
+      const loaded = await loadRazorpayScript();
+
+      if (!loaded) {
+        alert("Failed to load Razorpay SDK. Try again later.");
+        return;
+      }
       setIsPaymentLoading(true);
       const token = localStorage.getItem('token');
       

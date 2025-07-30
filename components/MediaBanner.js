@@ -7,15 +7,17 @@ import { url } from '@/constant';
 
 const MediaBanner = ({ imageUrl, text = '', callFrom = '' }) => {
   const bannerUrl = imageUrl || `${url}uploads/video11.mp4`;
+  const optimizedurl= "https://res.cloudinary.com/dkhhjhpbc/video/upload/w_1000,q_auto,f_auto/v1753728547/video11_jzj1qq.mp4";
 
   const isVideo = /\.(mp4|webm|ogg)$/i.test(bannerUrl);
+
 
   return (
     <div className="relative w-full h-[70vh] md:h-[70vh] lg:h-[80vh] bg-cover bg-center mb-8">
       <div className="absolute top-0 left-0 w-full h-full">
         {isVideo ? (
           <video
-            src={bannerUrl}
+            src={optimizedurl}
             autoPlay
             loop
             muted
