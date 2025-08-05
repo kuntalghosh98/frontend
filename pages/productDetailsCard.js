@@ -445,7 +445,7 @@ const ProductDetailsCard = () => {
                     </div>
                     <div className=" flex flex-col justify-center items-center p-4 border border-gray-300">
                       <Image className="h-10 w-10" src={image3} alt="Image 1" width={128} height={128} />
-                      <p className="bold whitespace-nowrap text-sm md:text-sm">Chsh On Delivery</p>
+                      <p className="bold whitespace-nowrap text-sm md:text-sm">Cash On Delivery</p>
                     </div>
                   </div>
       

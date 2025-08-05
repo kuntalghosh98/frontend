@@ -491,7 +491,14 @@ const NavBar = () => {
         <div className="flex justify-center items-center pb-4">
           <button
             className="flex items-center justify-center bg-black text-white rounded-full px-8 py-2"
-            onClick={isLoggedIn ? () => {router.push('/account')} : handleLoginClick}
+            onClick={() => {
+              closeMenu(); // ✅ Close the drawer
+              if (isLoggedIn) {
+                router.push('/account');
+              } else {
+                handleLoginClick();
+              }
+            }}
             
           >
             <FontAwesomeIcon icon={faUser} className="mr-2" />
