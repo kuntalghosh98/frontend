@@ -1,19 +1,33 @@
 // components/UserInitializer.js
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@/store/slices/userSlice';
 import { setCartItems } from '@/store/slices/cartSlice';
 import { setAddresses } from '@/store/slices/addressSlice';
 import { setWishlist } from "../store/slices/wishlistSlice";
+import { fetchProductById } from '@/api/productApi';
 import axios from 'axios';
 import { url } from '@/constant';
 
+
+const loadGuestCartToRedux = async (dispatch) => {
+  const guestWishlist = JSON.parse(localStorage.getItem('guestWishlistRedux') || '[]');
+  dispatch(setWishlist(guestWishlist));
+  
+  const guestCart = JSON.parse(localStorage.getItem('guestCartRedux') || '[]');
+  dispatch(setCartItems(guestCart));
+};
 const UserInitializer = () => {
   const dispatch = useDispatch();
-
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   useEffect(() => {
+   
     const token = localStorage.getItem('token');
+    if(!isLoggedIn){
+      loadGuestCartToRedux(dispatch);
 
+
+    }
     if (token) {
       const fetchUserData = async () => {
         try {

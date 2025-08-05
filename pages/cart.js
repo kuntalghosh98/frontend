@@ -98,7 +98,7 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const cartCount = useSelector(selectCartCount);
   const user = useSelector((state) => state.user.user);
-
+console.log("user in cart component",cartItems)
   const userId = user?._id;
 
   // Fetch cart data on component mount

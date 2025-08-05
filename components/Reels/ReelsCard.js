@@ -6,7 +6,7 @@ import Router from 'next/router';
 const Reelscard = ({ reel }) => {
   console.log("")
   const handleClick = () => {
-    Router.push(`./productDetailsCard?id=${product._id}`)
+    
   };
 
   return (

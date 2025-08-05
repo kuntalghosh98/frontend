@@ -34,38 +34,38 @@ const contactMethods = [
   {
     icon: faPhone,
     title: 'Call Us',
-    subtitle: '+91 12345 67890',
-    link: 'tel:+911234567890',
+    subtitle: '+91 91042 63912',
+    // link: 'tel:+919104263912',
   },
   {
     icon: faWhatsapp,
     title: 'WhatsApp Support',
-    subtitle: '+91 12345 67890',
-    link: 'https://wa.me/911234567890',
+    subtitle: '+91 91042 63912',
+    // link: 'https://wa.me/911234567890',
   },
   {
     icon: faEnvelope,
     title: 'Customer Support',
     subtitle: 'support@aurius.in',
-    link: 'mailto:support@aurius.in',
+    // link: 'mailto:support@aurius.in',
   },
   {
     icon: faEnvelope,
     title: 'Business Inquiries',
     subtitle: 'business@aurius.in',
-    link: 'mailto:business@aurius.in',
+    // link: 'mailto:business@aurius.in',
   },
   {
     icon: faInstagram,
     title: 'Instagram',
-    subtitle: '@aurius',
-    link: 'https://instagram.com/aurius',
+    subtitle: '@aurius_luxury',
+    link: 'https://www.instagram.com/aurius_luxury?igsh=NThkOTFsdTE4emls',
   },
   {
     icon: faFacebook,
     title: 'Facebook',
-    subtitle: '/aurius',
-    link: 'https://facebook.com/aurius',
+    subtitle: 'aurius',
+    link: 'https://www.facebook.com/share/19n2bv36tC/?mibextid=LQQJ4d',
   },
 ];
 

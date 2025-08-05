@@ -24,15 +24,15 @@ const Footer = () => {
 
         {/* Right - Social Icons */}
         <div className="flex mt-4 md:mt-0 space-x-4 md:space-x-6">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.facebook.com/share/19n2bv36tC/?mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
             <FaFacebookF className="w-4 h-4 md:w-5 md:h-5 hover:opacity-80" />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/aurius_luxury?igsh=NThkOTFsdTE4emls" target="_blank" rel="noopener noreferrer">
             <FaInstagram className="w-4 h-4 md:w-5 md:h-5 hover:opacity-80" />
           </a>
-          <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer">
+          {/* <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer">
             <FaPinterestP className="w-4 h-4 md:w-5 md:h-5 hover:opacity-80" />
-          </a>
+          </a> */}
         </div>
       </div>
 

@@ -92,7 +92,7 @@ const WishList = () => {
   const router = useRouter();
   const user = useSelector((state) => state.user.user);
   const wishlistProducts = useSelector((state) => state.wishlist.items);
-
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const userId = user?._id;
 
   useEffect(() => {
@@ -110,17 +110,47 @@ const WishList = () => {
     }
   };
 
+  // const handleRemove = async (productId) => {
+  //   try {
+  //     const removed = await removeFromWishlist(userId, productId);
+  //     if (removed.success) {
+  //       loadWishlist();
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to remove item from wishlist:', error);
+  //   }
+  // };
+
+
   const handleRemove = async (productId) => {
+    if (!isLoggedIn) {
+      const guestWishlistIds = JSON.parse(localStorage.getItem('guestWishlist') || '[]');
+      const guestWishlistRedux = JSON.parse(localStorage.getItem('guestWishlistRedux') || '[]');
+  
+      const updatedIds = guestWishlistIds.filter(id => id !== productId);
+      const updatedRedux = guestWishlistRedux.filter(item => item.productId._id !== productId);
+  
+      localStorage.setItem('guestWishlist', JSON.stringify(updatedIds));
+      localStorage.setItem('guestWishlistRedux', JSON.stringify(updatedRedux));
+      
+      const guestWishlist = JSON.parse(localStorage.getItem('guestWishlistRedux') || '[]');
+      dispatch(setWishlist(guestWishlist));
+      return;
+    }
+  
     try {
       const removed = await removeFromWishlist(userId, productId);
       if (removed.success) {
-        loadWishlist();
+        const updated = await fetchWishlistItems(userId);
+        dispatch(setWishlist(updated.items));
+       
       }
+      loadWishlist();
     } catch (error) {
       console.error('Failed to remove item from wishlist:', error);
     }
   };
-
+  
   return (
     <div className="mt-8">
       {wishlistProducts.length > 0 ? (

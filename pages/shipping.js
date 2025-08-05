@@ -19,7 +19,7 @@ const ShippingPage = () => {
   const router = useRouter();
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const isDataAvailable = useSelector((state) => state.user.isDataAvailable);
+  const isDataAvailable = useSelector((state) => state.user.isLoggedIn)
   const user = useSelector((state) => state.user.user);
   const userId = user?._id;
   const [spinner, setSpinner] = useState(false);

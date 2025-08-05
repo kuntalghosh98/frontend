@@ -238,7 +238,7 @@ const CartItem = ({ item }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.user?._id);
-
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const variant = item?.productId?.variants?.find(
@@ -247,42 +247,125 @@ const CartItem = ({ item }) => {
 
   const imageUrl = variant?.imageUrls?.[0] || '';
   const availableSizes = variant?.sizeStock || [];
+console.log("Cart Item --Item component", item);
+  // const handleUpdate = async (updatedItem) => {
+  //   if (
+  //     item.quantity === updatedItem.quantity &&
+  //     item.size === updatedItem.size
+  //   ) {
+  //     setIsModalOpen(false);
+  //     return;
+  //   }
 
+  //   try {
+  //     const response = await axios.put(`${url}api/cart/update`, {
+  //       userId,
+  //       cartItemId: updatedItem._id,
+  //       productId: updatedItem.productId._id,
+  //       size: updatedItem.size,
+  //       quantity: updatedItem.quantity > 12 ? 12 : updatedItem.quantity,
+  //       veriantColor: updatedItem.veriantColor,
+  //     });
+
+  //     if (response.status === 200) {
+  //       fetchCart();
+  //     }
+
+  //     setIsModalOpen(false);
+  //   } catch (error) {
+  //     console.error('Failed to update cart item:', error);
+  //   }
+  // };
   const handleUpdate = async (updatedItem) => {
+    const updatedQty = updatedItem.quantity > 12 ? 12 : updatedItem.quantity;
+  
+    // 👉 Skip if nothing changed
     if (
-      item.quantity === updatedItem.quantity &&
+      item.quantity === updatedQty &&
       item.size === updatedItem.size
     ) {
       setIsModalOpen(false);
       return;
     }
-
+  
+    // ✅ Guest User Logic
+    if (!isLoggedIn) {
+      const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+      const guestReduxCart = JSON.parse(localStorage.getItem('guestCartRedux') || '[]');
+  
+      const updatedCart = guestCart.map((cartItem) =>
+        cartItem.productId === updatedItem.productId
+          ? { ...cartItem, size: updatedItem.size, quantity: updatedQty }
+          : cartItem
+      );
+  
+      const updatedRedux = guestReduxCart.map((cartItem) =>
+        cartItem.productId._id === updatedItem.productId._id
+          ? { ...cartItem, size: updatedItem.size, quantity: updatedQty }
+          : cartItem
+      );
+  
+      localStorage.setItem('guestCart', JSON.stringify(updatedCart));
+      localStorage.setItem('guestCartRedux', JSON.stringify(updatedRedux));
+      dispatch(setCartItems(updatedRedux));
+      setIsModalOpen(false);
+      return;
+    }
+  
+    // ✅ Logged-in User Logic
     try {
       const response = await axios.put(`${url}api/cart/update`, {
         userId,
         cartItemId: updatedItem._id,
         productId: updatedItem.productId._id,
         size: updatedItem.size,
-        quantity: updatedItem.quantity > 12 ? 12 : updatedItem.quantity,
+        quantity: updatedQty,
         veriantColor: updatedItem.veriantColor,
       });
-
-      if (response.status === 200) {
-        fetchCart();
-      }
-
+  
+      if (response.status === 200) fetchCart();
       setIsModalOpen(false);
     } catch (error) {
       console.error('Failed to update cart item:', error);
     }
   };
+  
+  // const handleRemove = async () => {
+  //   try {
+  //     const response = await axios.delete(`${url}api/cart/remove/`, {
+  //       data: { userId, cartItemId: item.productId._id },
+  //     });
+
+  //     if (response.status === 200) {
+  //       fetchCart();
+  //       dispatch(removeFromCart(item.productId._id));
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to remove item from cart:', error);
+  //   }
+  // };
 
   const handleRemove = async () => {
+    // ✅ Guest User Logic
+    if (!isLoggedIn) {
+      const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+      const guestReduxCart = JSON.parse(localStorage.getItem('guestCartRedux') || '[]');
+  
+      const updatedCart = guestCart.filter((itemObj) => itemObj.productId !== item.productId._id);
+      const updatedRedux = guestReduxCart.filter((itemObj) => itemObj.productId._id !== item.productId._id);
+  
+      localStorage.setItem('guestCart', JSON.stringify(updatedCart));
+      localStorage.setItem('guestCartRedux', JSON.stringify(updatedRedux));
+      dispatch(setCartItems(updatedRedux));
+      return;
+    }
+  
+    // ✅ Logged-in User Logic
     try {
       const response = await axios.delete(`${url}api/cart/remove/`, {
         data: { userId, cartItemId: item.productId._id },
       });
-
+  
       if (response.status === 200) {
         fetchCart();
         dispatch(removeFromCart(item.productId._id));
@@ -291,7 +374,7 @@ const CartItem = ({ item }) => {
       console.error('Failed to remove item from cart:', error);
     }
   };
-
+  
   const fetchCart = async () => {
     try {
       const response = await axios.get(`${url}api/cart/${userId}`);
@@ -320,7 +403,7 @@ const CartItem = ({ item }) => {
         onClick={handleProductClick}
       >
         <img
-          src={`${urlImg}${imageUrl}`}
+          src={`${imageUrl}`}
           alt={item.productId.name}
           className="w-full h-full object-cover"
         />

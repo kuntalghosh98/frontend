@@ -46,13 +46,23 @@
 
 // components/Sidebar.js
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
+import { clearUser, logout } from '../../store/slices/userSlice';
 const Sidebar = ({ isOpen, toggleSidebar, onSelectCategory, isLargerDevice }) => {
+    const user = useSelector((state) => state.user.user); // Adjust based on your state structure
+    const dispatch = useDispatch();
+    const router = useRouter();
   const handleClick = (category) => {
     if (!isLargerDevice) toggleSidebar();
     onSelectCategory(category);
   };
+   const handleLogout = () => {
+      dispatch(clearUser());
+      localStorage.removeItem('token');
+      router.push('/');
+    };
 
   return (
     <div
@@ -113,6 +123,7 @@ const Sidebar = ({ isOpen, toggleSidebar, onSelectCategory, isLargerDevice }) =>
           </ul>
         </ul>
       </div>
+      <div className="p-4 cursor-pointer" onClick={handleLogout}>Logout</div>
     </div>
   );
 };

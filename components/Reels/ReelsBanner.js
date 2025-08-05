@@ -3,13 +3,13 @@ import Reelscard from './ReelsCard';
 import { url } from '@/constant';
 const ReelsBanner = ({ products }) => {
     const reels=[
-        `${url}uploads/reels1.mp4`,
-        `${url}uploads/reels2.mp4`,
-        `${url}uploads/reels3.mp4`,
-        `${url}uploads/reels4.mp4`,
-        `${url}uploads/reels5.mp4`,
-        `${url}uploads/reels6.mp4`,
-        `${url}uploads/reels7.mp4`
+        `https://res.cloudinary.com/dkhhjhpbc/video/upload/w_1000,q_auto,f_auto/v1753817145/Brown_White_Simple_Jewellery_Sale_Sale_Your_Story_7_jcqlbn.mp4`,
+        `https://res.cloudinary.com/dkhhjhpbc/video/upload/v1753982713/Brown_White_Simple_Jewellery_Sale_Sale_Your_Story_21_ecke86.mp4`,
+        `https://res.cloudinary.com/dkhhjhpbc/video/upload/v1753983759/Brown_White_Simple_Jewellery_Sale_Sale_Your_Story_51_npgpr6.mp4`,
+        `https://res.cloudinary.com/dkhhjhpbc/video/upload/v1753983760/Brown_White_Simple_Jewellery_Sale_Sale_Your_Story_31_jkwhxz.mp4`,
+        `https://res.cloudinary.com/dkhhjhpbc/video/upload/v1753983761/Brown_White_Simple_Jewellery_Sale_Sale_Your_Story_61_hy43lg.mp4`,
+        `https://res.cloudinary.com/dkhhjhpbc/video/upload/v1753983761/Brown_White_Simple_Jewellery_Sale_Sale_Your_Story_11_uux4it.mp4`,
+        `https://res.cloudinary.com/dkhhjhpbc/video/upload/v1753983762/Brown_White_Simple_Jewellery_Sale_Sale_Your_Story_owizr7.mp4`
     ]
   return (
     <div className="w-full overflow-x-auto no-scrollbar p-4">

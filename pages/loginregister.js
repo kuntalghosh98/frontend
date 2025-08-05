@@ -130,23 +130,76 @@ import { useRouter } from "next/router";
 import { googleLoginApi, requestOtpApi } from "@/api/authApi"; // Import API functions
 import Spinner from "@/components/Spinner";
 import image1 from "../Utility/icons/shoppana.svg";
+import { mergeCartOnLogin, mergeWishlistOnLogin } from "../commonFun/commonFunction"; // adjust the path
+import { getUserProfile, getCart } from "../api/userApi"; // adjust imports
+import { useDispatch } from "react-redux";
+import { setCartItems } from '@/store/slices/cartSlice';
+
+
 // import { toast } from "react-toastify";
 
 const LoginRegister = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [spinner, setSpinner] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const redirectPath = router.query.redirect || '/';
+  console.log("redirectPath:", redirectPath); 
+
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const token = urlParams.get("token");
+
+  //   if (token) {
+  //     localStorage.setItem("token", token);
+  //     router.replace(`/`);
+  //   }
+  // }, [router]);
+
 
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
+    const handleGoogleLoginCallback = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      
+    console.log("----------------jbvgjvggjvvjhbjh-------1---------");
+    console.log(token);
+    console.log("----------------jbvgjvggjvvjhbjh---------2-------");
+      if (!token) {"token not found"};
+  
+      try {
+        setSpinner(true)
+        // 1. Save token
+        localStorage.setItem("token", token);
+  
+        // 2. Get user
+        const user = await getUserProfile(token); // should return {_id, email, ...}
+        console.log("User data:", user);
+        const userId = user._id;
+        console.log("User ID:", userId);
+        // 3. Merge cart & wishlist
+        await Promise.all([
+                mergeCartOnLogin(userId, token),
+                mergeWishlistOnLogin(userId, token),
+              ]);
+  
+        // 4. Fetch merged cart and update redux
+        // const res = await getCart(userId);
+        // dispatch(setCartItems(res.items));
+              router.replace(redirectPath);
+      } catch (err) {
+        console.error("Post-Google-login flow failed:", err);
+      } finally {
+       
+        setSpinner(false);
+      }
+    };
+  
+    handleGoogleLoginCallback();
+  }, []);
 
-    if (token) {
-      localStorage.setItem("token", token);
-      router.replace(`/`);
-    }
-  }, [router]);
+
 
   const handleGoogleLogin = () => {
     window.location.href = googleLoginApi();
@@ -158,7 +211,7 @@ const LoginRegister = ({ onClose }) => {
       setSpinner(true);
       await requestOtpApi(email); 
       // toast.success("OTP sent successfully!");
-      router.push(`/verifyotp?email=${email}`);
+      router.push(`/verifyotp?email=${email}&redirect=${redirectPath}`);
     } catch (err) {
       console.error("Error sending OTP:", err);
       // toast.error("Failed to send OTP. Please try again.");
