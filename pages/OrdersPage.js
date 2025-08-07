@@ -81,7 +81,6 @@ import emptyOrder from "../Utility/icons/emptyOrder.png";
 
 const OrdersPage = () => {
   const router = useRouter();
-  const isDataAvailable = useSelector((state) => state.user.isDataAvailable);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const user = useSelector((state) => state.user.user);
 
@@ -100,10 +99,10 @@ const OrdersPage = () => {
   };
 
   useEffect(() => {
-    if (!isDataAvailable) {
+    if (!isLoggedIn) {
       router.push("/");
     }
-  }, [isDataAvailable, router]);
+  }, [isLoggedIn, router]);
 
   useEffect(() => {
     if (isLoggedIn && user?._id) {

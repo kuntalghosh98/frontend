@@ -92,7 +92,7 @@ const OrderMainCard = ({ items }) => {
   {/* Image */}
   <div className="relative w-24 h-24 md:w-28 md:h-28 rounded overflow-hidden border shadow-sm">
   <img
-    src={`${urlImg}${imageUrls[0]}`}
+    src={`${imageUrls[0]}`}
     alt="Order preview"
     className="object-cover w-full h-full"
   />

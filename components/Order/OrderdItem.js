@@ -86,7 +86,7 @@ const OrderdItem = ({ item }) => {
       >
         {/* Image */}
         <img
-          src={`${urlImg}${imageUrl}`}
+          src={`${imageUrl}`}
           alt={item.productId.name}
           className="w-28 h-28 md:w-32 md:h-32 object-cover rounded border"
         />

@@ -79,7 +79,7 @@ const ShippingPage = () => {
 
   const handlePaymentSuccess = async (paymentData, orderDetails) => {
     try {
-      setSpinner(true);
+      // setSpinner(true);
       await createOrderApi({
         userId,
         items: orderDetails.items,
@@ -92,10 +92,11 @@ const ShippingPage = () => {
       dispatch(setCartItems(freshCart.items));
 
       setIsPaymentSuccess(true);
+      setSpinner(false);
     } catch (error) {
       console.error('Error in success handler:', error);
     }finally{
-      setSpinner(false);
+     
     }
   };
 
@@ -107,6 +108,7 @@ const ShippingPage = () => {
         address,
         paymentResponse
       });
+      setSpinner(false);
     } catch (error) {
       console.error('Error logging failed payment:', error);
     }
@@ -212,6 +214,7 @@ const ShippingPage = () => {
         return;
       }
       setIsPaymentLoading(true);
+      setSpinner(true);
       const token = localStorage.getItem('token');
       
       // 🔄 1. Refetch cart from backend
@@ -227,7 +230,7 @@ const ShippingPage = () => {
   
       // ✅ Proceed with Razorpay if no mismatch
       const data = await createRazorpayOrderApi(token);
-  
+      
       const options = {
         key: 'rzp_test_M3md2FfQumDPz2',
         amount: data.amount,
@@ -246,6 +249,7 @@ const ShippingPage = () => {
           };
   
           const verify = await verifyRazorpayPaymentApi(paymentData, token);
+          
           if (verify.success) {
             const paymentResponse = {
               ...paymentData,
@@ -300,7 +304,7 @@ const ShippingPage = () => {
   const pushToAddress = () => {
     router.push({ pathname: '/address', query: { from: 'shipping' } });
   };
-if (spinner) return <Spinner />;
+// if (spinner) return <Spinner />;
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">Shipping Information</h1>
@@ -340,6 +344,11 @@ if (spinner) return <Spinner />;
         >
           Add Address / Select Address
         </button>
+      )}
+      {spinner && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+          <Spinner /> 
+        </div>
       )}
 
       {isPaymentSuccess && (

@@ -176,17 +176,21 @@ import AddressForm from "../components/Address/AddressForm";
 import AddressCard from "../components/Address/AddressCard";
 import { setAddresses, selectAddress } from "@/store/slices/addressSlice";
 import { fetchAddresses, addAddressApi, editAddressApi, deleteAddressApi } from "@/api/addressApi"; // Abstracted API calls
-
+import Spinner from "@/components/Spinner";
+import LoginModal from "@/components/LoginModal";
+import no_address from "../Utility/icons/no_address.png";
+import Image from "next/image";
 const AddressPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.user);
   const addresses = useSelector((state) => state.address.addresses);
-
+const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+const [loginModialOpen, setShowLoginModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-
+const [spinner, setSpinner] = useState(false);
   const userId = user?._id;
 
   const fetchAndSetAddresses = async () => {
@@ -195,6 +199,8 @@ const AddressPage = () => {
       dispatch(setAddresses(addressList));
     } catch (error) {
       console.error("Error fetching addresses:", error);
+    }finally{
+      setSpinner(false);
     }
   };
 
@@ -213,7 +219,10 @@ const AddressPage = () => {
       await fetchAndSetAddresses();
     } catch (error) {
       console.error("Error editing address:", error);
+    }finally{
+      setSpinner(false);
     }
+
   };
 
   const handleDeleteAddress = async (addressId) => {
@@ -226,8 +235,14 @@ const AddressPage = () => {
   };
 
   const handleAddNew = () => {
-    setSelectedAddress(null);
-    setIsModalOpen(true);
+    if(!isLoggedIn) {
+      return setShowLoginModal(true);
+    }else{
+      setSelectedAddress(null);
+      setIsModalOpen(true);
+    }
+
+    
   };
 
   const handleEdit = (address) => {
@@ -241,6 +256,7 @@ const AddressPage = () => {
   };
 
   const handleSave = (newAddress) => {
+    setSpinner(true);
     if (selectedAddress) {
       handleEditAddress(newAddress, selectedAddress._id);
     } else {
@@ -265,8 +281,21 @@ const AddressPage = () => {
           Add New Address
         </button>
       </div>
-
+      {addresses.length<=0 && (
+        <div className="flex flex-col items-center justify-center  ">
+        <Image
+          src={no_address}
+          alt="No Address"
+          className="  "
+        />
+        </div>
+        )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {spinner && 
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+        <Spinner />
+        </div>
+        }
         {addresses.map((address) => (
           <AddressCard
             key={address._id}
@@ -276,6 +305,7 @@ const AddressPage = () => {
             handleSelect={handleSelect}
           />
         ))}
+      
       </div>
 
       {isModalOpen && (
@@ -286,6 +316,11 @@ const AddressPage = () => {
           onCancel={handleCancel}
           isOpen={isModalOpen}
           onClose={handleCancel}
+        />
+      )}
+      {loginModialOpen && (
+        <LoginModal
+        setShowLoginModal={setShowLoginModal}
         />
       )}
     </div>
