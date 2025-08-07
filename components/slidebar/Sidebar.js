@@ -127,7 +127,7 @@ const Sidebar = ({ isOpen, toggleSidebar, onSelectCategory, isLargerDevice }) =>
       </div>
 
       {/* Content */}
-      <div className="flex flex-col justify-between h-[calc(100%-8rem)]">
+      <div className="flex flex-col justify-between h-[calc(100%-10rem)]">
         <div className="p-5 space-y-6 overflow-y-auto">
           {/* Main Sections */}
           <div className="space-y-3">
