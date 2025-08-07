@@ -187,7 +187,8 @@ const LoginRegister = ({ onClose }) => {
         // 4. Fetch merged cart and update redux
         // const res = await getCart(userId);
         // dispatch(setCartItems(res.items));
-              router.replace(redirectPath);
+              // router.replace(redirectPath);
+              window.location.href = redirectPath;
       } catch (err) {
         console.error("Post-Google-login flow failed:", err);
       } finally {
