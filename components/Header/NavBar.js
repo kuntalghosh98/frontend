@@ -253,7 +253,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
@@ -272,6 +272,7 @@ import { selectCartCount } from '../../store/slices/cartSlice';
 import AuriusLogoGold from '../../public/AuriusLogoGold.png';
 import AuriusLogoWhite from '../../public/AuriusLogoWhite.png';
 import AuriusLogoBlack from '../../public/AuriusLogoBlack.png';
+import { clearUser } from '../../store/slices/userSlice';
 
 const NavBar = () => {
   const router = useRouter();
@@ -296,7 +297,7 @@ const NavBar = () => {
   const closeSearch = () => setIsSearchOpen(false);
 
   const handleClick = () => router.push('/');
-
+  const dispatch = useDispatch();
   const handleBagClick = () => router.push('/cart');
   const handleWishListClick = () => router.push('/wishList');
   const handleLoginClick = () => router.push('/loginregister');
@@ -366,6 +367,7 @@ const NavBar = () => {
       dispatch(clearUser());
       localStorage.removeItem('token');
       router.push('/');
+      closeMenu();
     };
 
   return (

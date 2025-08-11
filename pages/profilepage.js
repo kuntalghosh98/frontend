@@ -3,6 +3,7 @@ import { getUserProfile, updateUserProfile } from '../api/userApi'; // adjust im
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../store/slices/userSlice';
 import Spinner from "@/components/Spinner";
+import SuccessPopup from '@/components/SuccessPopup';
 export default function ProfilePage() {
    const userId = useSelector((state) => state?.user.user?._id) || "";
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const [spinner, setSpinner] = useState(false);
     gender: '',
     mobile: '',
   });
-
+const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [token, setToken] = useState(null);
@@ -70,17 +71,21 @@ const [spinner, setSpinner] = useState(false);
     }
   
     try {
+        setSpinner(true)
       await updateUserProfile(userId, formData, token); // Pass user._id here
-      setMessage('Profile updated successfully.');
+      setShowSuccessPopup(true);
     } catch (err) {
       console.error('Profile update error:', err);
       setError(err.message || 'Update failed');
+    }finally{
+      setSpinner(false);
     }
   };
   
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
+        {showSuccessPopup && <SuccessPopup message="Profile updated successfully." onClose={() => setShowSuccessPopup(false)} />}
          {spinner && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <Spinner /> 

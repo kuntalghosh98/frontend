@@ -69,7 +69,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <p className="text-center text-xs opacity-80 mt-4">
-        © {new Date().getFullYear()} Celestique Jewelry. All rights reserved.
+        © {new Date().getFullYear()} Aurius Luxury. All rights reserved.
       </p>
     </footer>
   );
