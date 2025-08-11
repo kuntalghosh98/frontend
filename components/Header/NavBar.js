@@ -431,7 +431,7 @@ const NavBar = () => {
 
         {/* Desktop Links */}
         <div className={`${isDefaultRoute ? textColor : "text-black"} hidden md:flex space-x-4   `}>
-          {["RINGS", "EARRINGS", "NECKLACES","BRACELETS","BANGLLES"].map((item) => (
+          {["RINGS", "EARRINGS", "NECKLACES","BRACELETS","BANGLES"].map((item) => (
             <NavLink
               key={item}
               href={`/products?category=women+jewellery+${item.toLowerCase()}`}
@@ -482,7 +482,7 @@ const NavBar = () => {
       {/* Side Drawer Menu */}
       <div className={`fixed top-16 right-0 h-[calc(100%-4rem)] bg-white shadow-lg transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out z-40`} style={{ width: '80%', maxWidth: '500px' }}>
         <div className="p-4 flex flex-col space-y-4 h-[75vh]">
-          {["RINGS", "EARRINGS", "NECKLACES","BRACELETS","BANGLLES"].map((item) => (
+          {["RINGS", "EARRINGS", "NECKLACES","BRACELETS","BANGLES"].map((item) => (
             <NavLink
             onClick={closeMenu}
               key={item}
