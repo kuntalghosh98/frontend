@@ -263,6 +263,7 @@ import {
   faUser,
 
 } from '@fortawesome/free-solid-svg-icons';
+import { FiPackage, FiMapPin, FiUser, FiPhone, FiHelpCircle } from "react-icons/fi";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import NavLink from './Navlink';
@@ -361,6 +362,11 @@ const NavBar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isOpen, isDefaultRoute]);
+    const handleLogout = () => {
+      dispatch(clearUser());
+      localStorage.removeItem('token');
+      router.push('/');
+    };
 
   return (
     <nav className={`${isDefaultRoute && !scrolled && !isOpen ? 'bg-transparent' : 'bg-white shadow-sm'} p-4  fixed w-full top-0 left-0 z-50 transition-colors duration-300`} style={{ height: '4rem' }}>
@@ -448,7 +454,7 @@ const NavBar = () => {
               </span>
             )}
           </div>
-          <FontAwesomeIcon icon={isOpen ? faTimes : faBars} className={`${isDefaultRoute ? textColor : "text-black"} hover:text-gray-500 cursor-pointer`} onClick={toggleMenu} />
+          <FontAwesomeIcon icon={isOpen ? faTimes : faBars} className={`${isDefaultRoute ? textColor : "text-black"} hover:text-gray-500 cursor-pointer `} onClick={toggleMenu} style={{fontSize:22}}/>
         </div>
 
         {/* Icons - Desktop */}
@@ -487,23 +493,67 @@ const NavBar = () => {
               {item}
             </NavLink>
           ))}
-        </div>
-        <div className="flex justify-center items-center pb-4">
-          <button
-            className="flex items-center justify-center bg-black text-white rounded-full px-8 py-2"
-            onClick={() => {
+          <div className='border'></div>
+                  <div>
+          {/* { isLoggedIn && (<div>
+            <div>Address</div>
+            <div>Order</div>
+            <button
+             onClick={() => {
               closeMenu(); // ✅ Close the drawer
               if (isLoggedIn) {
-                router.push('/account');
+                router.push('/profilepage');
               } else {
                 handleLoginClick();
               }
             }}
-            
-          >
-            <FontAwesomeIcon icon={faUser} className="mr-2" />
-            {isLoggedIn ? (user.name || user.email) : 'Login / Register'}
-          </button>
+            >Profile</button>
+
+
+          </div>)} */}
+
+{isLoggedIn && (
+  <div className="mt-4 space-y-1">
+    <MenuItem icon={FiPackage} label="Orders" onClick={() => { closeMenu(); router.push('/OrdersPage'); }} />
+    <MenuItem icon={FiMapPin} label="Address" onClick={() => { closeMenu(); router.push('/address'); }} />
+    <MenuItem icon={FiUser} label="Profile" onClick={() => { closeMenu(); router.push('/profilepage'); }} />
+
+    <hr className="my-2 border-gray-300" />
+
+    <MenuItem icon={FiPhone} label="Customer Care" onClick={() => { closeMenu(); router.push('/contactus'); }} />
+    {/* <MenuItem icon={FiHelpCircle} label="Help / FAQs" onClick={() => { closeMenu(); router.push('/help'); }} /> */}
+
+    {/* <hr className="my-2 border-gray-300" /> */}
+  </div>
+)}
+        </div>
+        </div>
+
+        <div className="flex justify-center items-center pb-4">
+          { isLoggedIn ? 
+             
+             <button
+               onClick={handleLogout}
+               className=" w-60 text-middle text-red-600 hover:text-red-800 font-medium"
+               style={{border: '1px solid red', borderRadius: '120px', padding: '10px'}}
+             >
+               Logout
+             </button>
+            :  
+        
+        <button
+        className="flex items-center justify-center bg-black text-white rounded-full px-8 py-2"
+        onClick={() => {
+          closeMenu(); // ✅ Close the drawer
+          handleLoginClick();
+        }}
+        
+      >
+        <FontAwesomeIcon icon={faUser} className="mr-2" />
+         Login / Register
+      </button>
+        }
+
         </div>
       </div>
     </nav>
@@ -511,3 +561,14 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+
+const MenuItem = ({ icon: Icon, label, onClick }) => (
+  <button
+    onClick={onClick}
+    className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 text-left"
+  >
+    <Icon size={18} strokeWidth={1.5} />
+    <span className="text-sm font-medium">{label}</span>
+  </button>
+);

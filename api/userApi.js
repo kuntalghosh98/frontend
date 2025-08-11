@@ -41,3 +41,26 @@ export const verifyEmailOtp = async ({ email, otp }) => {
   });
   return response.data;
 };
+
+// utils/api/userApi.js
+
+export const updateUserProfile = async (userId, userData, token) => {
+  const res = await fetch(`${url}api/users/profile/update-profile`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      userId,   // Pass userId here
+      ...userData
+    }),
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || 'Failed to update profile');
+  }
+
+  return await res.json();
+};
