@@ -137,18 +137,23 @@ const WishList = () => {
       dispatch(setWishlist(guestWishlist));
       return;
     }
+    const currentWishlist = [...wishlistProducts];
+  const updatedWishlist = wishlistProducts.filter(item => item.productId._id !== productId);
+  dispatch(setWishlist(updatedWishlist));
   
     try {
       const removed = await removeFromWishlist(userId, productId);
       if (removed.success) {
-        const updated = await fetchWishlistItems(userId);
-        dispatch(setWishlist(updated.items));
+        // const updated = await fetchWishlistItems(userId);
+        // dispatch(setWishlist(updated.items));
        
       }
-      loadWishlist();
+      // loadWishlist();
     } catch (error) {
       console.error('Failed to remove item from wishlist:', error);
+      dispatch(setWishlist(currentWishlist));
     }
+    
   };
   
   return (
