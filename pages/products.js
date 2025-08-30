@@ -62,9 +62,9 @@ console.log("products ---999", products);
     <div className="bg-[#f9f7f3]">
       <MediaBanner imageUrl={insideImage} />
       <div className="text-center py-4 text-4xl font-semibold">{heading}</div>
-      <aside className="w-1/4 p-4 hidden md:block">
+      <div className="w-1/4 p-4 hidden md:block">
           <Filter products={filteredProducts} onFilter={handleFilter} />
-        </aside>
+        </div>
       <div className="flex">
         
 

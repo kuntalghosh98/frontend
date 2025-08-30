@@ -297,6 +297,7 @@ const ShippingPage = () => {
       alert('Something went wrong. Please try again.');
     } finally {
       setIsPaymentLoading(false);
+      setSpinner(false);
     }
   };
   

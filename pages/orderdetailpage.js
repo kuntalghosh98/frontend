@@ -63,12 +63,25 @@ const OrderDetailPage = () => {
   const [orderdItem, setOrderdItem] = useState([]);
   const [deliveryAddress, setDeliveryAddress] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
+const [shipment, setShipment] = useState(null);
+const [orderId, setOrderId] = useState(null); // Added orderId state
+const buildShipmentMap = (shipments) => {
+  const map = {};
+  shipments.forEach((shipment) => {
+    shipment.items.forEach((item) => {
+      map[item] = shipment; // 🔹 maps productId → shipment
+    });
+  });
+  return map;
+};
   const fetchOrder = async (id) => {
     try {
       const response = await fetchOrderApi(id);
+      console.log("order response ---", response);
       setOrderdItem(response.items);
       setDeliveryAddress(response.address);
+      setShipment(response.shipments);
+      setOrderId(response._id); // Set the orderId from the response
     } catch (error) {
       console.error("Error fetching order details:", error);
     } finally {
@@ -82,7 +95,9 @@ const OrderDetailPage = () => {
       fetchOrder(id);
     }
   }, [router.query.id]);
-
+  console.log("shipment info --11-", shipment);
+  const shipmentMap = buildShipmentMap(shipment || []);
+  console.log("shipment map ---", shipmentMap);
   if (isLoading) return <Spinner />;
 
   return (
@@ -90,7 +105,7 @@ const OrderDetailPage = () => {
       <h1 className="text-2xl font-serif text-gray-800 mb-6 border-b pb-2">Order Details</h1>
 
       {orderdItem.length > 0 ? (
-        orderdItem.map((item) => <OrderdItem key={item._id} item={item} />)
+        orderdItem.map((item) => <OrderdItem key={item._id} item={item}  shipment={shipmentMap[item._id] || null} orderId={orderId}/>)
       ) : (
         <p className="text-center text-gray-500">No items found in this order.</p>
       )}

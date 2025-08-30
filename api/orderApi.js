@@ -70,3 +70,16 @@ export const verifyRazorpayPaymentApi = async (paymentData) => {
 
   return res.data;
 };
+
+
+
+
+export const cancelOrderItemApi = async (data) => {
+  const res = await axios.post(`${url}api/orders/cancel-item`, data);
+  return res.data;
+};
+
+export const requestReturnApi = async (data) => {
+  const res = await axios.post(`${url}api/orders/return-item`, data);
+  return res.data;
+};
