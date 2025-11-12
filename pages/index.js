@@ -130,13 +130,21 @@ import MediaBanner from '@/components/MediaBanner';
 import HorizontalScrollCard from '@/components/Cards/HorizontalScrollCard';
 import Banner from '@/components/Banners/Banner';
 import ProductScrollBanner from '@/components/ProductScrollBanner/ProductScrollBanner';
+import CategorySkeleton from "@/components/Skeletons/CategorySkeleton";
+import ProductScrollSkeleton from "@/components/Skeletons/ProductScrollSkeleton";
+import BannerSkeleton from "@/components/Skeletons/BannerSkeleton";
 
-const ReelsBanner = lazy(() => import('@/components/Reels/ReelsBanner'));
+import { useInView } from 'react-intersection-observer';
+
+// const ReelsBanner = lazy(() => import('@/components/Reels/ReelsBanner'));
+
+import dynamic from "next/dynamic";
+const ReelsBanner = dynamic(() => import('@/components/Reels/ReelsBanner'), { ssr: false });
+
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  
-  const [loadingStep, setLoadingStep] = useState(0);
+  const { ref, inView } = useInView({ triggerOnce: true });
   const categoryBanner = useSelector((state) => state.bannerCards.items.data);
   const highlightedProducts = useSelector((state) => state.highlightedProducts.highlightedProducts);
   const newArrivals = useSelector((state) => state.newArrivals.newArrivals);
@@ -161,7 +169,7 @@ const HomePage = () => {
     } catch (error) {
       console.error('User initialization failed:', error);
     } finally {
-      setStep(0); // Start loading home data after user is ready (or skipped)
+      // setStep(0); // Start loading home data after user is ready (or skipped)
     }
   };
 
@@ -170,15 +178,24 @@ const HomePage = () => {
       
 
      
-        await dispatch(fetchBannerCards());
-        setLoadingStep(1);
-        await dispatch(fetchHighlightedProducts());
-        setLoadingStep(2);
-        await dispatch(fetchNewArrivals());
-        setLoadingStep(3);
-        await dispatch(fetchProductScrollList());
+      //   await dispatch(fetchBannerCards());
+      //   setLoadingStep(1);
+      //   await dispatch(fetchHighlightedProducts());
+      //   setLoadingStep(2);
+      //   await dispatch(fetchNewArrivals());
+      //   setLoadingStep(3);
+      //   await dispatch(fetchProductScrollList());
        
-      dispatch(fetchProducts());
+      // dispatch(fetchProducts());
+        
+        dispatch(fetchBannerCards()).unwrap();
+        dispatch(fetchHighlightedProducts()).unwrap();
+        dispatch(fetchNewArrivals()).unwrap();
+        dispatch(fetchProductScrollList()).unwrap();
+        dispatch(fetchProducts()).unwrap();
+        
+
+
     } catch (err) {
       console.error('Error loading homepage:', err);
       setError('Something went wrong loading homepage data.');
@@ -209,37 +226,47 @@ useEffect(() => {
     <div className="w-full mx-auto bg-[#f9f7f3]">
       <MediaBanner text="The classic Aura" />
 
-      {categoryBanner && (
+      {categoryBanner ? (
         <>
           <h6 className="flex justify-center w-full p-2 text-4xl font-semibold">CATEGORY</h6>
           <div className="w-full py-4">
             <HorizontalScrollCard cards={categoryBanner[0]?.cards || []} />
           </div>
         </>
+      ) : (
+        <CategorySkeleton />
       )}
 
-      {highlightedProducts?.data && (
+      {highlightedProducts?.data ? (
         <Banner cardData={highlightedProducts.data[0]} />
+      ) : (
+        <BannerSkeleton />
       )}
 
-      {newArrivals?.length > 0 && (
+      {newArrivals?.length > 0 ? (
         <>
           <h6 className="flex justify-center w-full p-2 text-4xl font-semibold">New Arrival</h6>
           <ProductScrollBanner products={newArrivals} />
         </>
+      ) : (
+        <ProductScrollSkeleton />
       )}
 
-      <Suspense fallback={<div className="text-center my-4">Loading Reels...</div>}>
+      {/* <Suspense fallback={<div className="text-center my-4">Loading Reels...</div>}>
         <ReelsBanner />
-      </Suspense>
-
-      {productScrollList?.data?.length > 0 && (
+      </Suspense> */}
+      <div ref={ref}>
+        {inView && <ReelsBanner />}
+      </div>
+      {productScrollList?.data?.length > 0 ? (
         <>
           <h6 className="flex justify-center w-full p-2 text-4xl font-semibold">
             {productScrollList.data[0]?.name}
           </h6>
           <ProductScrollBanner products={productScrollList.data[0]?.productIds || []} />
         </>
+      ) : (
+        <ProductScrollSkeleton />
       )}
     </div>
   );
